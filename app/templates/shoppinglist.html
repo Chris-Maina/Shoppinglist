@@ -1,0 +1,76 @@
+{% extends "base.html" %} {% block title %}Shoppinglist{%endblock%} {% block body %}
+<div class="container page-content">
+	<div class="row container">
+		{%if resp in resp%}
+
+		<div class="alert alert-success" role="alert" id="reg-alert">
+			{{ resp }}
+		</div>
+
+		{%endif%} 
+		<div>
+
+			<form id="add-list-form" method="post" action="/shoppinglist" style="display: block;margin:0px 0px 30px 30px;">
+				<div class="row">
+					<div class="col-sm-8">
+						<div class="form-group">
+							<input type="text" name="activity-name" id="list-name" placeholder="List name" value="" class="form-control" required>
+						</div>
+					</div>
+					<div class="col-sm-4">
+						<div class="form-group">
+							<input type="submit" method="post" name="list-submit" id="list-submit" class=" btn btn-primary" value="Add List">
+						</div>
+					</div>
+				</div>
+			</form>
+			<!--form-->
+		</div>
+	</div>
+	<div class="row container">
+		<div class="col-md-10">
+			<div class="panel panel-success">
+				<div class="panel-heading">
+					<h3 class="panel-title">Shopping List</h3>
+				</div>
+				<!--panel-heading-->
+				<table class="table table-hover" id="activity-table">
+					<thead>
+						<tr>
+							<th>List Name</th>
+							<th>Save Edit</th>
+							<th>Trash</th>
+                            <th>Add item</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for activity in activitylist %}
+						<tr>
+							<form id="bucket-name-form-{{ bucket['name'] }}">
+								<td>
+									<div class="form-group">
+										<input type="text" value="{{ bucket['name'] }}" class="form-control" name="list_name" style="border:none">
+										<input type="hidden" value="{{ bucket['name'] }}" class="form-control" name="list_name_org">
+									</div>
+								</td>
+								<td> <button type="submit" class="btn btn-info btn-sm" form="bucket-name-form-{{ bucket['name'] }}" formmethod="post" formaction="/edit-activity">
+							<span class="glyphicon glyphicon-saved" aria-hidden="true"></span>Save</button>
+								</td>
+								<td> <button type="submit" class="btn btn-info btn-sm" form="bucket-name-form-{{ bucket['name'] }}" formmethod="post" formaction="/delete-activity">
+							<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>Trash</button>
+								</td>
+                                <td>
+                                    <a href="/shoppingitems/{{ bucket['name'] }}" class="btn btn-primary">Add item</a>
+                                </td>
+							</form>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+			<!--panel panel-success-->
+		</div>
+		<!--col-md-8-->
+	</div>
+</div>
+{% endblock %}
