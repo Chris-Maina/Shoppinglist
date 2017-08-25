@@ -7,6 +7,9 @@ html, body {
 html {
 	position: relative;
 }
+.indexContent{
+    background-image: url(https://unsplash.it/1400/795?image=329);
+}
 /* Vertically Centres everything in section element */
 .login-signup {
 	width: 100%;
@@ -35,6 +38,11 @@ font-size: 50px;
 font-family: "Comic Sans MS", cursive, sans-serif;
 margin-top: -140px;
 
+}
+#shoppinglist-heading-2{
+    text-align: center;
+    font-size: 50px;
+    font-family: "Comic Sans MS", cursive, sans-serif;
 }
 /* Styling the text and password boxes */
 input[type=text], input[type=password] {
@@ -66,4 +74,117 @@ button:hover {
 /*Styling sign up button*/
 #btn-signup{
 	width: 80%;
+}
+/*Center content*/
+.add-shopping, .shopping-table{
+    margin: auto;
+    padding: 10px;
+    width: 80%;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 10px;
+}
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 10px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+/*Style add button*/
+.btn-add-shopping{
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+/*Navigation*/
+.nav {
+	height: 50px;
+	margin-right: 10px;
+	float: right;
+    font-size: 18px;
+}
+
+.nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.nav ul li {
+	display: inline-block;	
+}
+
+.nav ul li a {
+    display: block;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    color: #f1f1f1;
+}
+
+.nav ul li a:hover {
+    color: #f05e16;
+}
+
+#nav > ul > a {
+	padding-right: 8px;
+}
+
+.clear {
+	clear: both;
+}
+#content {
+	width: 100%;
+    height: 100px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+	text-align: center;
+	align-content: center;
+}
+#shoppinglist-heading-1 {
+	margin-top: -50px;
+	font-size: 50px;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    color: #f05e16;
+}
+#shoppinglist-index-p{
+    font-size: 25px;
+    color: #f1f1f1;
+}
+footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 50px;
+    width: 100%;
+    overflow:hidden;
+}
+
+#footer-wrapper {
+	width: 100%;
+	height: 50px;
+}
+
+#left_navigation_links {
+	float: left;
+    padding: 10px;
 }
