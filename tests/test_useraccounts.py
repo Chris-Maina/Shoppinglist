@@ -3,6 +3,7 @@ import unittest
 # import module useraccounts
 from app.useraccounts import UserClass
 
+
 class AccountTestCases(unittest.TestCase):
     """
     Test for duplicate accounts(user already exists)
@@ -12,6 +13,7 @@ class AccountTestCases(unittest.TestCase):
     Test login with wrong password
     Test login with existing email and password
     """
+
     def setUp(self):
         """Setting up UserClass before anything
         """
@@ -72,3 +74,43 @@ class AccountTestCases(unittest.TestCase):
         msg = self.user.registeruser(
             "Chris", "mainachris@gmail.com", "chrismaina", "chrismaina")
         self.assertEqual(msg, "Successfully registered. You can now login!")
+
+    def test_case_login_noaccount(self):
+        """
+        Args
+            non existent email and password
+        Returns
+            error message
+        """
+        self.user.user_list = [
+            {'username': 'chris', 'password': 'chrismaina', 'email': 'mainachrisw@gmail.com'}]
+        msg = self.user.login("njekama@gmail.com", "chrismaina")
+        self.assertEqual(msg, "You have no account,please sign up")
+
+    def test_case_login_wrong_password(self):
+        """
+        Args
+            existent email and wrong password
+        Returns
+            error message
+        """
+        self.user.user_list = [
+            {'username': 'chris', 'password': 'chrismaina', 'email': 'mainachrisw@gmail.com'}]
+        msg = self.user.login("mainachrisw@gmail.com", "mainachris")
+        self.assertEqual(msg, "Password mismatch")
+
+    def test_case_correct_login(self):
+        """
+        Args
+            existent email and password
+        Returns
+            success message
+        """
+        self.user.user_list = [
+            {'username': 'chris', 'password': 'chrismaina', 'email': 'mainachrisw@gmail.com'}]
+        msg = self.user.login("mainachrisw@gmail.com", "chrismaina")
+        self.assertEqual(msg, "Successfully logged in, create buckets!")
+
+
+if __name__ == '__main__':
+    unittest.main()
