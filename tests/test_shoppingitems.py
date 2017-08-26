@@ -88,6 +88,14 @@ class TestCasesItems(unittest.TestCase):
             'Booze', "maina@gmail.com")
         self.assertEqual(msg, ['Snacks'])
 
+    def test_deleted_list(self):
+        """Check if bucket deleted will have its activities deleted to
+        """
+        self.item_class_obj.item_list = [{'owner': 'maina@gmail.com', 'list': 'Adventure', 'name': 'Snacks'}, {
+            'owner': 'maina@gmail.com', 'list': 'Adventure', 'name': 'Booze'}]
+        res = self.item_class_obj.deleted_list_items('Adventure')
+        self.assertEqual(res, None)
+
 
 if __name__ == '__main__':
     unittest.main()
