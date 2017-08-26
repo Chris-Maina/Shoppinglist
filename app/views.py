@@ -153,3 +153,9 @@ def delete_item():
         msg = shopitems_obj.delete_item(item_name, user)
         response = "Successfuly deleted activity " + item_name
         return render_template("shoppingitems.html", itemlist=msg, name=list_name, resp=response)
+
+@app.route('/logout')
+def logout():
+    """Handles logging out of users"""
+    session.pop('email', None)
+    return render_template("index.html")
