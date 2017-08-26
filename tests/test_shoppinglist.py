@@ -48,7 +48,8 @@ class TestCasesShoppingList(unittest.TestCase):
                                                  {'owner': 'maina@gmail.com', 'name': 'Christmass'}]
         user = "maina@gmail.com"
         msg = self.shopping_class_obj.get_owner(user)
-        self.assertEqual(msg, [{'owner': 'maina@gmail.com', 'name': 'Easter'}, {'owner': 'maina@gmail.com', 'name': 'Christmass'}])
+        self.assertEqual(msg, [{'owner': 'maina@gmail.com', 'name': 'Easter'}, {
+                         'owner': 'maina@gmail.com', 'name': 'Christmass'}])
 
     def test_correct_output(self):
         """Check for correct shopping list creation
@@ -57,3 +58,13 @@ class TestCasesShoppingList(unittest.TestCase):
             'Rave', "mainachrisw@gmail.com")
         self.assertEqual(
             msg, [{'owner': 'mainachrisw@gmail.com', 'name': 'Rave'}])
+
+    def test_editing_shoppinglist(self):
+        """Check for edits to shoppinglist name
+        """
+        self.shopping_class_obj.shopping_list = [{'owner': 'maina@gmail.com', 'name': 'Rave'}, {
+            'owner': 'maina@gmail.com', 'name': 'Easter'}]
+        msg = self.shopping_class_obj.edit_list(
+            'Christmass', 'Rave', "maina@gmail.com")
+        self.assertEqual(msg, [{'owner': 'maina@gmail.com', 'name': 'Christmass'}, {
+            'owner': 'maina@gmail.com', 'name': 'Easter'}])
