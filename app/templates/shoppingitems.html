@@ -46,20 +46,20 @@
 						</tr>
 					</thead>
 					<tbody>
-						{% for activity in activitylist %}
+						{% for shoppingitem in itemlist %}
 						<tr>
-							<form id="edit-name-form-{{ activity }}">
+							<form id="edit-name-form-{{ shoppingitem }}">
 								<td>
 									<div class="form-group">
-										<input type="text" value="{{ activity }}" class="form-control" name="item_name" style="border:none">
-										<input type="hidden" value="{{ activity }}" class="form-control" name="item_name_org">
-										<input type="hidden" value="{{ name }}" class="form-control" name="bucket_name">
+										<input type="text" value="{{ shoppingitem }}" class="form-control" name="item_name" style="border:none">
+										<input type="hidden" value="{{ shoppingitem }}" class="form-control" name="item_name_org">
+										<input type="hidden" value="{{ name }}" class="form-control" name="list_name">
 									</div>
 								</td>
-								<td> <button type="submit" class="btn btn-info btn-sm" form="edit-name-form-{{ activity }}" formmethod="post" formaction="/edit-activity">
+								<td> <button type="submit" class="btn btn-info btn-sm" form="edit-name-form-{{ shoppingitem }}" formmethod="post" formaction="/edit-activity">
 							<span class="glyphicon glyphicon-saved" aria-hidden="true"></span>Save</button>
 								</td>
-								<td> <button type="submit" class="btn btn-info btn-sm" form="edit-name-form-{{ activity }}" formmethod="post" formaction="/delete-activity">
+								<td> <button type="submit" class="btn btn-info btn-sm" form="edit-name-form-{{ shoppingitem }}" formmethod="post" formaction="/delete-activity">
 							<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>Trash</button>
 								</td>
 							</form>
