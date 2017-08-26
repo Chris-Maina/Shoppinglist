@@ -113,7 +113,7 @@ def shoppingitems(shoplist):
                         for item in msg if item['list'] == shoplist]
             return render_template("shoppingitems.html", itemlist=new_list, name=shoplist)
     else:
-        response = "You can now add your activities"
+        response = "You can now add your items"
         return render_template('shoppingitems.html', resp=response, name=shoplist, itemlist=new_list)
 
 
@@ -129,7 +129,7 @@ def edit_item():
         msg = shopitems_obj.edit_item(
             item_name, item_name_org, list_name, user)
         if isinstance(msg, list):
-            response = "Successfully edited activity " + item_name_org
+            response = "Successfully edited item " + item_name_org
             # Get edited list of the current shopping list
             new_list = [item['name']
                         for item in msg if item['list'] == list_name]
@@ -151,7 +151,7 @@ def delete_item():
         item_name = request.form['item_name']
         list_name = request.form['list_name']
         msg = shopitems_obj.delete_item(item_name, user)
-        response = "Successfuly deleted activity " + item_name
+        response = "Successfuly deleted item " + item_name
         return render_template("shoppingitems.html", itemlist=msg, name=list_name, resp=response)
 
 @app.route('/logout')
