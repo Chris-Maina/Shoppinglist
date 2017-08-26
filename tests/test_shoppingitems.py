@@ -59,16 +59,26 @@ class TestCasesItems(unittest.TestCase):
             "Easter", "Bread", "mainachrisw@gmail.com")
         self.assertEqual(
             msg, [{'owner': 'mainachrisw@gmail.com', 'list': 'Easter', 'name': 'Bread'}])
-        
+
     def test_editing_item(self):
         """Check for edits to item name
         """
-        self.item_class_obj.item_list = [{'owner': 'mainachrisw@gmail.com', 'list': 'Adventure', 'name': 'Snacks'}, {
-            'owner': 'mainachrisw@gmail.com', 'list': 'Adventure', 'name': 'Booze'}]
+        self.item_class_obj.item_list = [{'owner': 'maina@gmail.com', 'list': 'Adventure', 'name': 'Snacks'}, {
+            'owner': 'maina@gmail.com', 'list': 'Adventure', 'name': 'Booze'}]
         msg = self.item_class_obj.edit_item(
-            'Soda', 'Booze', 'Adventure', "mainachrisw@gmail.com")
-        self.assertEqual(msg, [{'owner': 'mainachrisw@gmail.com', 'list': 'Adventure', 'name': 'Snacks'}, {
-            'owner': 'mainachrisw@gmail.com', 'list': 'Adventure', 'name': 'Soda'}])
+            'Soda', 'Booze', 'Adventure', "maina@gmail.com")
+        self.assertEqual(msg, [{'owner': 'maina@gmail.com', 'list': 'Adventure', 'name': 'Snacks'}, {
+            'owner': 'maina@gmail.com', 'list': 'Adventure', 'name': 'Soda'}])
+
+    def test_edit_existing_itemname(self):
+        """Check if edit name provided is similar to an existing item
+        """
+        self.item_class_obj.item_list = [{'owner': 'maina@gmail.com', 'list': 'Adventure', 'name': 'Snacks'}, {
+            'owner': 'maina@gmail.com', 'list': 'Adventure', 'name': 'Booze'}]
+        msg = self.item_class_obj.edit_item(
+            'Snacks', 'Booze', 'Adventure', "maina@gmail.com")
+        self.assertEqual(msg, "Item name already exists")
+
 
 if __name__ == '__main__':
     unittest.main()
