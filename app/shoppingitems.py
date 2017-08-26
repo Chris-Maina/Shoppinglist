@@ -83,3 +83,13 @@ class ShoppingItemsClass(object):
         for shopping in my_items:
             deleted_item_list.append(shopping['name'])
         return deleted_item_list
+
+    def deleted_list_items(self, list_name):
+        """Delete items for the list that was deleted
+        Args
+             shopping list name
+        """
+        for i in range(len(self.item_list)):
+            if self.item_list[i]['list'] == list_name:
+                del self.item_list[i]
+                break
