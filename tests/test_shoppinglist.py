@@ -87,3 +87,7 @@ class TestCasesShoppingList(unittest.TestCase):
             'Rave', "maina@gmail.com")
         self.assertEqual(msg, [{
             'owner': 'maina@gmail.com', 'name': 'Adventure'}, {'owner': 'maina@gmail.com', 'name': 'Shagz'}])
+
+
+if __name__ == '__main__':
+    unittest.main()
