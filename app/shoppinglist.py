@@ -45,3 +45,26 @@ class ShoppinglistClass(object):
         else:
             return "No special characters (. , ! space [] )"
         return self.get_owner(user)
+
+    def edit_list(self, edit_name, org_name, user):
+        """Handles edits made to shopping list name
+            Args
+                editted name and original name
+            returns
+                error message or a list of shopping
+        """
+        if re.match("^[a-zA-Z0-9_]*$", edit_name):
+            # Get users lists
+            my_shopping_lists = self.get_owner(user)
+            for item in my_shopping_lists:
+                if edit_name == item['name']:
+                    return "Shopping list name already exists"
+                elif org_name == item['name']:
+                    del item['name']
+                    edit_dict = {
+                        'name': edit_name
+                    }
+                    item.update(edit_dict)
+        else:
+            return "No special characters (. , ! space [] )"
+        return self.get_owner(user)
