@@ -1,6 +1,6 @@
 """ views.py """
 from flask import render_template, request, session
-from app import app, user_object, shoplist_obj
+from app import app, user_object, shoplist_obj, shopitems_obj
 
 @app.route('/')
 def index():
@@ -88,8 +88,23 @@ def delete_shoppinglist():
         response = "Successfuly deleted bucket " + del_name
         return render_template('shoppinglist.html', resp=response, shoppinglist=msg)
 
-@app.route('/shoppingitems', methods=['GET', 'POST'])
-def shoppingitems():
+@app.route('/shoppingitems/<shoplist>', methods=['GET', 'POST'])
+def shoppingitems(shoplist):
     """Handles shopping items creation
     """
-    return render_template('shoppingitems.html')
+    user = session['email']
+    # Get a list of users items for a specific shopping list
+    user_items = shopitems_obj.owner_items(user)
+    # specific shopping list
+    new_list = [item['name']
+                for item in user_items if item['list'] == shoplist]
+    if request.method == 'POST':
+        item_name = request.form['item-name']
+        msg = shopitems_obj.add_item(shoplist, item_name, user)
+        if isinstance(msg, list):
+            new_list = [item['name']
+                        for item in msg if item['list'] == shoplist]
+            return render_template("shoppingitems.html", itemlist=new_list, name=shoplist)
+    else:
+        response = "You can now add your activities"
+        return render_template('shoppingitems.html', resp=response, name=shoplist, itemlist=new_list)
