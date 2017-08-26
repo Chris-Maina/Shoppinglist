@@ -65,3 +65,21 @@ class ShoppingItemsClass(object):
                 else:
                     return "Item name already exists"
         return my_items
+
+    def delete_item(self, item_name, user):
+        """Handles deletion of bucket activities
+        Args
+            activity name
+        returns
+            list with activity name removed
+        """
+        # Get users activities
+        for item in range(len(self.item_list)):
+            if self.item_list[item]['name'] == item_name:
+                del self.item_list[item]
+                break
+        deleted_item_list = []
+        my_items = self.owner_items(user)
+        for shopping in my_items:
+            deleted_item_list.append(shopping['name'])
+        return deleted_item_list
