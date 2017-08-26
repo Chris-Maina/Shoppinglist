@@ -7,6 +7,7 @@ class TestCasesItems(unittest.TestCase):
     """
     Test for existence of activity in activity creation
     Test for special character activitynames
+    Test for correct owner
     Test for correct output(activity creation)
     Test for deletion of existing activity
     Test for editing activity names
@@ -27,8 +28,8 @@ class TestCasesItems(unittest.TestCase):
     def test_existing_item(self):
         """Check to see item name exists or not
          """
-        self.item_class_obj.item_list = [{'owner': 'maina@gmail.com', 'bucket': 'Easter', 'name': 'Bread'}, {
-            'owner': 'maina@gmail.com', 'bucket': 'Easter', 'name': 'Blueband'}]
+        self.item_class_obj.item_list = [{'owner': 'maina@gmail.com', 'list': 'Easter', 'name': 'Bread'}, {
+            'owner': 'maina@gmail.com', 'list': 'Easter', 'name': 'Blueband'}]
         msg = self.item_class_obj.add_item(
             "Easter", "Bread", "maina@gmail.com")
         self.assertEqual(msg, "Shopping item name already exists")
@@ -42,15 +43,22 @@ class TestCasesItems(unittest.TestCase):
 
     def test_owner(self):
         """ Check for shopping items belonging to owner"""
-        self.item_class_obj.item_list = [{'owner': 'maina@gmail.com', 'bucket': 'Easter', 'name': 'Bread'},
+        self.item_class_obj.item_list = [{'owner': 'maina@gmail.com', 'list': 'Easter', 'name': 'Bread'},
                                          {'owner': 'njekama@gmail.com',
-                                          'bucket': 'Easter', 'name': 'Blueband'},
-                                         {'owner': 'maina@gmail.com', 'bucket': 'Easter', 'name': 'Blueband'}]
+                                          'list': 'Easter', 'name': 'Blueband'},
+                                         {'owner': 'maina@gmail.com', 'list': 'Easter', 'name': 'Blueband'}]
         user = "njekama@gmail.com"
         msg = self.item_class_obj.owner_items(user)
         self.assertEqual(
-            msg, [{'owner': 'njekama@gmail.com', 'bucket': 'Easter', 'name': 'Blueband'}])
+            msg, [{'owner': 'njekama@gmail.com', 'list': 'Easter', 'name': 'Blueband'}])
 
+    def test_correct_output_item(self):
+        """Check for correct item creation
+        """
+        msg = self.item_class_obj.add_item(
+            "Easter", "Bread", "mainachrisw@gmail.com")
+        self.assertEqual(
+            msg, [{'owner': 'mainachrisw@gmail.com', 'list': 'Easter', 'name': 'Bread'}])
 
 if __name__ == '__main__':
     unittest.main()
