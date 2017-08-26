@@ -2,11 +2,13 @@
 from flask import render_template, request, session
 from app import app, user_object, shoplist_obj, shopitems_obj
 
+
 @app.route('/')
 def index():
     """Handles rendering of index page
     """
     return render_template("index.html")
+
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -26,6 +28,7 @@ def register():
 
     return render_template("register.html")
 
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     """Handles logging in
@@ -42,6 +45,7 @@ def login():
             return render_template('login.html', resp=msg)
     return render_template("login.html")
 
+
 @app.route('/shoppinglist', methods=['GET', 'POST'])
 def shoppinglist():
     """Handles shopping list creation
@@ -56,6 +60,7 @@ def shoppinglist():
         else:
             return render_template('shoppinglist.html', resp=msg, shoppinglist=user_lists)
     return render_template('shoppinglist.html', shoppinglist=user_lists)
+
 
 @app.route('/edit-list', methods=['GET', 'POST'])
 def save_edits():
@@ -75,6 +80,7 @@ def save_edits():
             return render_template('shoppinglist.html', resp=msg, shoppinglist=user_lists)
     return render_template('shoppinglist.html')
 
+
 @app.route('/delete-list', methods=['GET', 'POST'])
 def delete_shoppinglist():
     """Handles deletion of shoppinglist and its items
@@ -84,9 +90,10 @@ def delete_shoppinglist():
         del_name = request.form['list_name']
         msg = shoplist_obj.delete_list(del_name, user)
         # Delete the its activies
-        #activity_object.deleted_bucket_activities(del_name)
+        # activity_object.deleted_bucket_activities(del_name)
         response = "Successfuly deleted bucket " + del_name
         return render_template('shoppinglist.html', resp=response, shoppinglist=msg)
+
 
 @app.route('/shoppingitems/<shoplist>', methods=['GET', 'POST'])
 def shoppingitems(shoplist):
@@ -108,3 +115,41 @@ def shoppingitems(shoplist):
     else:
         response = "You can now add your activities"
         return render_template('shoppingitems.html', resp=response, name=shoplist, itemlist=new_list)
+
+
+@app.route('/edit-item', methods=['GET', 'POST'])
+def edit_item():
+    """ Handles editing of items
+    """
+    user = session['email']
+    if request.method == 'POST':
+        item_name = request.form['item_name']
+        item_name_org = request.form['item_name_org']
+        list_name = request.form['list_name']
+        msg = shopitems_obj.edit_item(
+            item_name, item_name_org, list_name, user)
+        if isinstance(msg, list):
+            response = "Successfully edited activity " + item_name_org
+            # Get edited list of the current shopping list
+            new_list = [item['name']
+                        for item in msg if item['list'] == list_name]
+            return render_template("shoppingitems.html", itemlist=new_list, name=list_name, resp=response)
+        else:
+            # Get user's items in the current shopping list
+            user_items = shopitems_obj.owner_items(user)
+            new_list = [item['name']
+                        for item in user_items if item['list'] == list_name]
+    return render_template("shoppingitems.html", itemlist=new_list, name=list_name, resp=msg)
+
+
+@app.route('/delete-item', methods=['GET', 'POST'])
+def delete_item():
+    """ Handles deletion of items
+    """
+    user = session['email']
+    if request.method == 'POST':
+        item_name = request.form['item_name']
+        list_name = request.form['list_name']
+        msg = shopitems_obj.delete_item(item_name, user)
+        response = "Successfuly deleted activity " + item_name
+        return render_template("shoppingitems.html", itemlist=msg, name=list_name, resp=response)
