@@ -68,3 +68,22 @@ class TestCasesShoppingList(unittest.TestCase):
             'Christmass', 'Rave', "maina@gmail.com")
         self.assertEqual(msg, [{'owner': 'maina@gmail.com', 'name': 'Christmass'}, {
             'owner': 'maina@gmail.com', 'name': 'Easter'}])
+
+    def test_edit_existing_shoppinglist(self):
+        """Check if edit name provided is similar to an existing shoppinglist
+        """
+        self.shopping_class_obj.shopping_list = [{'owner': 'maina@gmail.com', 'name': 'Rave'}, {
+            'owner': 'maina@gmail.com', 'name': 'Shagz'}]
+        msg = self.shopping_class_obj.edit_list(
+            'Shagz', 'Rave', "maina@gmail.com")
+        self.assertEqual(msg, "Shopping list name already exists")
+
+    def test_delete_shoppinglist(self):
+        """Check to see if shoppinglist is deleted
+        """
+        self.shopping_class_obj.shopping_list = [{'owner': 'maina@gmail.com', 'name': 'Rave'}, {
+            'owner': 'maina@gmail.com', 'name': 'Adventure'}, {'owner': 'maina@gmail.com', 'name': 'Shagz'}]
+        msg = self.shopping_class_obj.delete_list(
+            'Rave', "maina@gmail.com")
+        self.assertEqual(msg, [{
+            'owner': 'maina@gmail.com', 'name': 'Adventure'}, {'owner': 'maina@gmail.com', 'name': 'Shagz'}])
