@@ -43,3 +43,25 @@ class ShoppingItemsClass(object):
             return self.owner_items(user)
         else:
             return "No special characters (. , ! space [] )"
+
+    def edit_item(self, item_name, org_item_name, list_name, user):
+        """Handles editing of items
+            Args
+                editted name and original name
+            returns
+                error message or a list of items
+        """
+        # Get users items
+        my_items = self.owner_items(user)
+        for item in my_items:
+            if item['list'] == list_name:
+                if item['name'] != item_name:
+                    if item['name'] == org_item_name:
+                        del item['name']
+                        edit_dict = {
+                            'name': item_name,
+                        }
+                        item.update(edit_dict)
+                else:
+                    return "Item name already exists"
+        return my_items
