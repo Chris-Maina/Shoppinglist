@@ -79,6 +79,15 @@ class TestCasesItems(unittest.TestCase):
             'Snacks', 'Booze', 'Adventure', "maina@gmail.com")
         self.assertEqual(msg, "Item name already exists")
 
+    def test_delete_activity(self):
+        """Check to see if activity is deleted
+        """
+        self.item_class_obj.item_list = [{'owner': 'maina@gmail.com', 'list': 'Adventure', 'name': 'Snacks'}, {
+            'owner': 'maina@gmail.com', 'list': 'Adventure', 'name': 'Booze'}]
+        msg = self.item_class_obj.delete_item(
+            'Booze', "maina@gmail.com")
+        self.assertEqual(msg, ['Snacks'])
+
 
 if __name__ == '__main__':
     unittest.main()
