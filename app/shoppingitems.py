@@ -93,3 +93,4 @@ class ShoppingItemsClass(object):
             if self.item_list[i]['list'] == list_name:
                 del self.item_list[i]
                 break
+            
