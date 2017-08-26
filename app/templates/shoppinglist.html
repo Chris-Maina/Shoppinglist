@@ -14,7 +14,7 @@
 				<div class="row">
 					<div class="col-sm-8">
 						<div class="form-group">
-							<input type="text" name="activity-name" id="list-name" placeholder="List name" value="" class="form-control" required>
+							<input type="text" name="list-name" id="list-name" placeholder="List name" value="" class="form-control" required>
 						</div>
 					</div>
 					<div class="col-sm-4">
@@ -44,23 +44,23 @@
 						</tr>
 					</thead>
 					<tbody>
-						{% for activity in activitylist %}
+						{% for item in shoppinglist %}
 						<tr>
-							<form id="bucket-name-form-{{ bucket['name'] }}">
+							<form id="list-name-form-{{ item['name'] }}">
 								<td>
 									<div class="form-group">
-										<input type="text" value="{{ bucket['name'] }}" class="form-control" name="list_name" style="border:none">
-										<input type="hidden" value="{{ bucket['name'] }}" class="form-control" name="list_name_org">
+										<input type="text" value="{{ item['name'] }}" class="form-control" name="list_name" style="border:none">
+										<input type="hidden" value="{{ item['name'] }}" class="form-control" name="list_name_org">
 									</div>
 								</td>
-								<td> <button type="submit" class="btn btn-info btn-sm" form="bucket-name-form-{{ bucket['name'] }}" formmethod="post" formaction="/edit-activity">
+								<td> <button type="submit" class="btn btn-info btn-sm" form="list-name-form-{{ item['name'] }}" formmethod="post" formaction="/edit-list">
 							<span class="glyphicon glyphicon-saved" aria-hidden="true"></span>Save</button>
 								</td>
-								<td> <button type="submit" class="btn btn-info btn-sm" form="bucket-name-form-{{ bucket['name'] }}" formmethod="post" formaction="/delete-activity">
+								<td> <button type="submit" class="btn btn-info btn-sm" form="list-name-form-{{ item['name'] }}" formmethod="post" formaction="/delete-list">
 							<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>Trash</button>
 								</td>
                                 <td>
-                                    <a href="/shoppingitems/{{ bucket['name'] }}" class="btn btn-primary">Add item</a>
+                                    <a href="/shoppingitems/{{ item['name'] }}" class="btn btn-primary">Add item</a>
                                 </td>
 							</form>
 						</tr>
