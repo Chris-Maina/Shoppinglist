@@ -1,6 +1,6 @@
 """ views.py """
 from flask import render_template, request, session
-from app import app, user_object
+from app import app, user_object, shoplist_obj
 
 @app.route('/')
 def index():
@@ -46,7 +46,16 @@ def login():
 def shoppinglist():
     """Handles shopping list creation
     """
-    return render_template('shoppinglist.html')
+    user = session['email']
+    user_lists = shoplist_obj.get_owner(user)
+    if request.method == 'POST':
+        list_name = request.form['list-name']
+        msg = shoplist_obj.create_list(list_name, user)
+        if isinstance(msg, list):
+            return render_template('shoppinglist.html', shoppinglist=msg)
+        else:
+            return render_template('shoppinglist.html', resp=msg, shoppinglist=user_lists)
+    return render_template('shoppinglist.html', shoppinglist=user_lists)
 
 @app.route('/shoppingitems', methods=['GET', 'POST'])
 def shoppingitems():
