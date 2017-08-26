@@ -57,6 +57,37 @@ def shoppinglist():
             return render_template('shoppinglist.html', resp=msg, shoppinglist=user_lists)
     return render_template('shoppinglist.html', shoppinglist=user_lists)
 
+@app.route('/edit-list', methods=['GET', 'POST'])
+def save_edits():
+    """ Handles editing of shopping lists """
+
+    user = session['email']
+    user_lists = shoplist_obj.get_owner(user)
+    if request.method == 'POST':
+        edit_name = request.form['list_name']
+        org_name = request.form['list_name_org']
+        msg = shoplist_obj.edit_list(edit_name, org_name, user)
+        if msg == shoplist_obj.shopping_list:
+            response = "Successfully edited bucket " + org_name
+            return render_template('shoppinglist.html', resp=response, shoppinglist=msg)
+        else:
+            #existing = shoplist_obj.shopping_list
+            return render_template('shoppinglist.html', resp=msg, shoppinglist=user_lists)
+    return render_template('shoppinglist.html')
+
+@app.route('/delete-list', methods=['GET', 'POST'])
+def delete_shoppinglist():
+    """Handles deletion of shoppinglist and its items
+    """
+    user = session['email']
+    if request.method == 'POST':
+        del_name = request.form['list_name']
+        msg = shoplist_obj.delete_list(del_name, user)
+        # Delete the its activies
+        #activity_object.deleted_bucket_activities(del_name)
+        response = "Successfuly deleted bucket " + del_name
+        return render_template('shoppinglist.html', resp=response, shoppinglist=msg)
+
 @app.route('/shoppingitems', methods=['GET', 'POST'])
 def shoppingitems():
     """Handles shopping items creation
