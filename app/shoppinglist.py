@@ -68,3 +68,20 @@ class ShoppinglistClass(object):
         else:
             return "No special characters (. , ! space [] )"
         return self.get_owner(user)
+
+    def delete_list(self, list_name, user):
+        """Handles removal of shopping lists using list comprehension
+            Args
+                 list name
+            returns
+                 list with name removed
+        """
+        # Delete shopping list with name = list_name
+        for item in range(len(self.shopping_list)):
+            if self.shopping_list[item]['name'] == list_name:
+                del self.shopping_list[item]
+                break
+        # Get users shopping list
+        my_shopping_lists = self.get_owner(user)
+        return my_shopping_lists
+    
