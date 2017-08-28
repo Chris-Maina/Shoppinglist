@@ -9,7 +9,7 @@ def authorize(f):
     @wraps(f)
     def check(*args, **kwargs):
         """Function to check login status"""
-        if "logged_in" in session:
+        if "email" in session:
             return f(*args, **kwargs)
         else:
             msg = "Please login"
@@ -53,7 +53,6 @@ def login():
         msg = user_object.login(email, password)
         if msg == "Successfully logged in, create buckets!":
             session['email'] = email
-            session['logged_in'] = True
             return render_template('shoppinglist.html', resp=msg)
         else:
             return render_template('login.html', resp=msg)
