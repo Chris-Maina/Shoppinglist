@@ -1,6 +1,20 @@
 """ views.py """
+from functools import wraps
 from flask import render_template, request, session
 from app import app, user_object, shoplist_obj, shopitems_obj
+
+
+def authorize(f):
+    """Function to authenticate users when accessing other pages"""
+    @wraps(f)
+    def check(*args, **kwargs):
+        """Function to check login status"""
+        if "logged_in" in session:
+            return f(*args, **kwargs)
+        else:
+            msg = "Please login"
+            return render_template("login.html", resp=msg)
+    return check
 
 
 @app.route('/')
@@ -47,6 +61,7 @@ def login():
 
 
 @app.route('/shoppinglist', methods=['GET', 'POST'])
+@authorize
 def shoppinglist():
     """Handles shopping list creation
     """
@@ -63,6 +78,7 @@ def shoppinglist():
 
 
 @app.route('/edit-list', methods=['GET', 'POST'])
+@authorize
 def save_edits():
     """ Handles editing of shopping lists """
 
@@ -82,6 +98,7 @@ def save_edits():
 
 
 @app.route('/delete-list', methods=['GET', 'POST'])
+@authorize
 def delete_shoppinglist():
     """Handles deletion of shoppinglist and its items
     """
@@ -96,6 +113,7 @@ def delete_shoppinglist():
 
 
 @app.route('/shoppingitems/<shoplist>', methods=['GET', 'POST'])
+@authorize
 def shoppingitems(shoplist):
     """Handles shopping items creation
     """
@@ -118,6 +136,7 @@ def shoppingitems(shoplist):
 
 
 @app.route('/edit-item', methods=['GET', 'POST'])
+@authorize
 def edit_item():
     """ Handles editing of items
     """
@@ -143,6 +162,7 @@ def edit_item():
 
 
 @app.route('/delete-item', methods=['GET', 'POST'])
+@authorize
 def delete_item():
     """ Handles deletion of items
     """
@@ -153,6 +173,7 @@ def delete_item():
         msg = shopitems_obj.delete_item(item_name, user)
         response = "Successfuly deleted item " + item_name
         return render_template("shoppingitems.html", itemlist=msg, name=list_name, resp=response)
+
 
 @app.route('/logout')
 def logout():
