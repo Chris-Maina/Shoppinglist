@@ -1,3 +1,6 @@
+https://travis-ci.org/Chris-Maina/Shoppinglist.svg?branch=develop     [![Coverage Status](https://coveralls.io/repos/github/Chris-Maina/Shoppinglist/badge.svg?branch=develop)](https://coveralls.io/github/Chris-Maina/Shoppinglist?branch=develop)
+
+
 # Shoppinglist Application
 This repository contains an application helps you record all items you wish to buy. It allows you to record and share things you want to spend money on, meeting your needs and keeping track of your shopping lists. It is 
 developed to use data structures only i.e. 
