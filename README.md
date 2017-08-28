@@ -1,5 +1,4 @@
-https://travis-ci.org/Chris-Maina/Shoppinglist.svg?branch=develop     [![Coverage Status](https://coveralls.io/repos/github/Chris-Maina/Shoppinglist/badge.svg?branch=develop)](https://coveralls.io/github/Chris-Maina/Shoppinglist?branch=develop)
-
+https://travis-ci.org/Chris-Maina/Shoppinglist.svg?branch=develop     [![Coverage Status](https://coveralls.io/repos/github/Chris-Maina/Shoppinglist/badge.svg?branch=develop)](https://coveralls.io/github/Chris-Maina/Shoppinglist?branch=develop)   [![Codacy Badge](https://api.codacy.com/project/badge/Grade/b56fc12f98e546138ca01a8775e9aec1)](https://www.codacy.com/app/Chris-Maina/Shoppinglist?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Chris-Maina/Shoppinglist&amp;utm_campaign=Badge_Grade)
 
 # Shoppinglist Application
 This repository contains an application helps you record all items you wish to buy. It allows you to record and share things you want to spend money on, meeting your needs and keeping track of your shopping lists. It is 
