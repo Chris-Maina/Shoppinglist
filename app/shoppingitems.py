@@ -17,7 +17,8 @@ class ShoppingItemsClass(object):
         returns
             list of user's items
         """
-        user_items = [item for item in self.item_list if item['owner'] == user and item['list'] == list_name]
+        user_items = [item for item in self.item_list if item['owner']
+                      == user and item['list'] == list_name]
         return user_items
 
     def add_item(self, listname, item_name, user):
@@ -93,4 +94,3 @@ class ShoppingItemsClass(object):
             if self.item_list[i]['list'] == list_name:
                 del self.item_list[i]
                 break
-            
