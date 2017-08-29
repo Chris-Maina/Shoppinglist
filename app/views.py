@@ -118,7 +118,7 @@ def shoppingitems(shoplist):
     """
     user = session['email']
     # Get a list of users items for a specific shopping list
-    user_items = shopitems_obj.owner_items(user)
+    user_items = shopitems_obj.owner_items(user, shoplist)
     # specific shopping list
     new_list = [item['name']
                 for item in user_items if item['list'] == shoplist]
@@ -169,7 +169,7 @@ def delete_item():
     if request.method == 'POST':
         item_name = request.form['item_name']
         list_name = request.form['list_name']
-        msg = shopitems_obj.delete_item(item_name, user)
+        msg = shopitems_obj.delete_item(item_name, user, list_name)
         response = "Successfuly deleted item " + item_name
         return render_template("shoppingitems.html", itemlist=msg, name=list_name, resp=response)
 
