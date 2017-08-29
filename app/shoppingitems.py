@@ -90,7 +90,6 @@ class ShoppingItemsClass(object):
         Args
              shopping list name
         """
-        print len(self.item_list)
         for i in range(len(self.item_list)):
             if self.item_list[i]['list'] == list_name:
                 del self.item_list[i]
