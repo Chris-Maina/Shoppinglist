@@ -154,7 +154,7 @@ def edit_item():
             return render_template("shoppingitems.html", itemlist=new_list, name=list_name, resp=response)
         else:
             # Get user's items in the current shopping list
-            user_items = shopitems_obj.owner_items(user)
+            user_items = shopitems_obj.owner_items(user, list_name)
             new_list = [item['name']
                         for item in user_items if item['list'] == list_name]
     return render_template("shoppingitems.html", itemlist=new_list, name=list_name, resp=msg)
