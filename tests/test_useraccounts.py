@@ -109,7 +109,7 @@ class AccountTestCases(unittest.TestCase):
         self.user.user_list = [
             {'username': 'chris', 'password': 'chrismaina', 'email': 'mainachrisw@gmail.com'}]
         msg = self.user.login("mainachrisw@gmail.com", "chrismaina")
-        self.assertEqual(msg, "Successfully logged in, create buckets!")
+        self.assertEqual(msg, "Successfully logged in, create shoppinglist!")
 
 
 if __name__ == '__main__':
