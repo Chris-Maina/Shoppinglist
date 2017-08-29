@@ -48,7 +48,8 @@ class TestCasesItems(unittest.TestCase):
                                           'list': 'Easter', 'name': 'Blueband'},
                                          {'owner': 'maina@gmail.com', 'list': 'Easter', 'name': 'Blueband'}]
         user = "njekama@gmail.com"
-        msg = self.item_class_obj.owner_items(user)
+        shoppinglist = "Easter"
+        msg = self.item_class_obj.owner_items(user, shoppinglist)
         self.assertEqual(
             msg, [{'owner': 'njekama@gmail.com', 'list': 'Easter', 'name': 'Blueband'}])
 
@@ -85,7 +86,7 @@ class TestCasesItems(unittest.TestCase):
         self.item_class_obj.item_list = [{'owner': 'maina@gmail.com', 'list': 'Adventure', 'name': 'Snacks'}, {
             'owner': 'maina@gmail.com', 'list': 'Adventure', 'name': 'Booze'}]
         msg = self.item_class_obj.delete_item(
-            'Booze', "maina@gmail.com")
+            'Booze', "maina@gmail.com", 'Adventure')
         self.assertEqual(msg, ['Snacks'])
 
     def test_deleted_list(self):
