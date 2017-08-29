@@ -105,8 +105,8 @@ def delete_shoppinglist():
     if request.method == 'POST':
         del_name = request.form['list_name']
         msg = shoplist_obj.delete_list(del_name, user)
-        # Delete the its activies
-        # activity_object.deleted_bucket_activities(del_name)
+        # Delete the its items
+        shopitems_obj.deleted_list_items(del_name)
         response = "Successfuly deleted bucket " + del_name
         return render_template('shoppinglist.html', resp=response, shoppinglist=msg)
 
