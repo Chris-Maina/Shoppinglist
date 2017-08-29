@@ -51,7 +51,7 @@ def login():
         email = request.form['email']
         password = request.form['password']
         msg = user_object.login(email, password)
-        if msg == "Successfully logged in, create buckets!":
+        if msg == "Successfully logged in, create shoppinglist!":
             session['email'] = email
             return render_template('shoppinglist.html', resp=msg)
         else:
