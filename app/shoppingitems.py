@@ -10,14 +10,14 @@ class ShoppingItemsClass(object):
         # list to hold items within a shopping list
         self.item_list = []
 
-    def owner_items(self, user):
+    def owner_items(self, user, list_name):
         """Returns items belonging to a user
         Args
              user
         returns
             list of user's items
         """
-        user_items = [item for item in self.item_list if item['owner'] == user]
+        user_items = [item for item in self.item_list if item['owner'] == user and item['list'] == list_name]
         return user_items
 
     def add_item(self, listname, item_name, user):
@@ -30,7 +30,7 @@ class ShoppingItemsClass(object):
         # Check for special characters
         if re.match("^[a-zA-Z0-9_]*$", item_name):
             # Get users items
-            my_items = self.owner_items(user)
+            my_items = self.owner_items(user, listname)
             for item in my_items:
                 if item['name'] == item_name:
                     return "Shopping item name already exists"
@@ -40,7 +40,7 @@ class ShoppingItemsClass(object):
                 'owner': user
             }
             self.item_list.append(activity_dict)
-            return self.owner_items(user)
+            return self.owner_items(user, listname)
         else:
             return "No special characters (. , ! space [] )"
 
@@ -52,7 +52,7 @@ class ShoppingItemsClass(object):
                 error message or a list of items
         """
         # Get users items
-        my_items = self.owner_items(user)
+        my_items = self.owner_items(user, list_name)
         for item in my_items:
             if item['list'] == list_name:
                 if item['name'] != item_name:
@@ -66,7 +66,7 @@ class ShoppingItemsClass(object):
                     return "Item name already exists"
         return my_items
 
-    def delete_item(self, item_name, user):
+    def delete_item(self, item_name, user, list_name):
         """Handles deletion of bucket activities
         Args
             activity name
@@ -79,7 +79,7 @@ class ShoppingItemsClass(object):
                 del self.item_list[item]
                 break
         deleted_item_list = []
-        my_items = self.owner_items(user)
+        my_items = self.owner_items(user, list_name)
         for shopping in my_items:
             deleted_item_list.append(shopping['name'])
         return deleted_item_list
