@@ -53,7 +53,7 @@ class UserClass(object):
         for user in self.user_list:
             if email == user['email']:
                 if password == user['password']:
-                    return "Successfully logged in, create buckets!"
+                    return "Successfully logged in, create shoppinglist!"
                 else:
                     return "Password mismatch"
         return "You have no account,please sign up"
