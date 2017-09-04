@@ -1,10 +1,12 @@
 """ views.py """
 from functools import wraps
-from flask import render_template, request, session, redirect
+from flask import render_template, request, session
 from app import app, user_object, shoplist_obj, shopitems_obj
+# Variable stores user's email
+user = None  # pylint: disable=invalid-name,global-statement
 
-user = None # pylint: disable=invalid-name,global-statement
-def authorize(f): # pylint: disable=invalid-name
+
+def authorize(f):  # pylint: disable=invalid-name
     """Function to authenticate users when accessing other pages"""
     @wraps(f)
     def check(*args, **kwargs):
@@ -51,7 +53,7 @@ def login():
         msg = user_object.login(email, password)
         if msg == "Successfully logged in, create shoppinglist!":
             session['email'] = email
-            global user # pylint: disable=invalid-name,global-statement
+            global user  # pylint: disable=invalid-name,global-statement
             user = email
             user_lists = shoplist_obj.get_owner(user)
             return render_template('shoppinglist.html', resp=msg, shoppinglist=user_lists)
@@ -64,7 +66,7 @@ def login():
 def shoppinglist():
     """Handles shopping list creation
     """
-    global user # pylint: disable=invalid-name,global-statement
+    global user  # pylint: disable=invalid-name,global-statement
     user_lists = shoplist_obj.get_owner(user)
     print user_lists
     if request.method == 'POST':
@@ -81,7 +83,7 @@ def shoppinglist():
 def save_edits():
     """ Handles editing of shopping lists """
 
-    global user # pylint: disable=invalid-name,global-statement
+    global user  # pylint: disable=invalid-name,global-statement
     user_lists = shoplist_obj.get_owner(user)
     if request.method == 'POST':
         edit_name = request.form['list_name']
@@ -100,7 +102,7 @@ def save_edits():
 def delete_shoppinglist():
     """Handles deletion of shoppinglist and its items
     """
-    global user # pylint: disable=invalid-name,global-statement
+    global user  # pylint: disable=invalid-name,global-statement
     if request.method == 'POST':
         del_name = request.form['list_name']
         msg = shoplist_obj.delete_list(del_name, user)
@@ -115,7 +117,7 @@ def delete_shoppinglist():
 def shoppingitems(shoplist):
     """Handles shopping items creation
     """
-    global user # pylint: disable=invalid-name,global-statement
+    global user  # pylint: disable=invalid-name,global-statement
     # Get a list of users items for a specific shopping list
     user_items = shopitems_obj.owner_items(user, shoplist)
     # specific shopping list
@@ -129,8 +131,8 @@ def shoppingitems(shoplist):
                         for item in msg if item['list'] == shoplist]
             return render_template("shoppingitems.html", itemlist=new_list, name=shoplist)
     else:
-        response = "You can now add your items"
-        return render_template('shoppingitems.html', resp=response, name=shoplist, itemlist=new_list)
+        res = "You can now add your items"
+        return render_template('shoppingitems.html', resp=res, name=shoplist, itemlist=new_list)
 
 
 @app.route('/edit-item', methods=['GET', 'POST'])
@@ -138,7 +140,7 @@ def shoppingitems(shoplist):
 def edit_item():
     """ Handles editing of items
     """
-    global user # pylint: disable=invalid-name,global-statement
+    global user  # pylint: disable=invalid-name,global-statement
     if request.method == 'POST':
         item_name = request.form['item_name']
         item_name_org = request.form['item_name_org']
@@ -146,11 +148,11 @@ def edit_item():
         msg = shopitems_obj.edit_item(
             item_name, item_name_org, list_name, user)
         if isinstance(msg, list):
-            response = "Successfully edited item " + item_name_org
+            res = "Successfully edited item " + item_name_org
             # Get edited list of the current shopping list
-            new_list = [item['name']
-                        for item in msg if item['list'] == list_name]
-            return render_template("shoppingitems.html", itemlist=new_list, name=list_name, resp=response)
+            newlist = [item['name']
+                       for item in msg if item['list'] == list_name]
+            return render_template("shoppingitems.html", itemlist=newlist, name=list_name, resp=res)
         else:
             # Get user's items in the current shopping list
             user_items = shopitems_obj.owner_items(user, list_name)
@@ -164,7 +166,7 @@ def edit_item():
 def delete_item():
     """ Handles deletion of items
     """
-    global user # pylint: disable=invalid-name,global-statement
+    global user  # pylint: disable=invalid-name,global-statement
     if request.method == 'POST':
         item_name = request.form['item_name']
         list_name = request.form['list_name']
