@@ -42,8 +42,7 @@ class ShoppingItemsClass(object):
             }
             self.item_list.append(activity_dict)
             return self.owner_items(user, listname)
-        else:
-            return "No special characters (. , ! space [] )"
+        return "No special characters (. , ! space [] )"
 
     def edit_item(self, item_name, org_item_name, list_name, user):
         """Handles editing of items
