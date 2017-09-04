@@ -68,7 +68,6 @@ def shoppinglist():
     """
     global user  # pylint: disable=invalid-name,global-statement
     user_lists = shoplist_obj.get_owner(user=user)
-    print user_lists
     if request.method == 'POST':
         list_name = request.form['list-name']
         msg = shoplist_obj.create_list(list_name, user)
