@@ -26,7 +26,7 @@ class UserClass(object):
         # check for existing user
         for user in self.user_list:
             if email == user['email']:
-                return "User already exists. Please login"     
+                return "User already exists. Please login"
         # check for password length and mismatch
         if len(password) < 6:
             return "Your password should be at least 6 characters long"
