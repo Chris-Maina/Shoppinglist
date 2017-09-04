@@ -31,6 +31,13 @@ developed to use data structures only i.e.
     
 ## Running the application
     $  (yourenvname) python run.py
+    
+## Testing the application
+cd into tests folder, RUN the following commands
+   * $ nosetests test_useraccounts.py
+   * $ nosetests test_shoppinglist.py
+   * $ nosetests test_shoppingitems.py
+
 ## How to use appliction
 * Register an account
 * Login with the credentials used during registration
