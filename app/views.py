@@ -3,17 +3,16 @@ from functools import wraps
 from flask import render_template, request, session
 from app import app, user_object, shoplist_obj, shopitems_obj
 
-
-def authorize(f):
+user =  # pylint: disable=invalid-name,global-statement
+def authorize(f): # pylint: disable=invalid-name
     """Function to authenticate users when accessing other pages"""
     @wraps(f)
     def check(*args, **kwargs):
         """Function to check login status"""
         if "email" in session:
             return f(*args, **kwargs)
-        else:
-            msg = "Please login"
-            return render_template("login.html", resp=msg)
+        msg = "Please login"
+        return render_template("login.html", resp=msg)
     return check
 
 
@@ -37,8 +36,7 @@ def register():
         msg = user_object.registeruser(username, email, password, cpassword)
         if msg == "Successfully registered. You can now login!":
             return render_template("login.html", resp=msg)
-        else:
-            return render_template("register.html", resp=msg)
+        return render_template("register.html", resp=msg)
 
     return render_template("register.html")
 
@@ -53,9 +51,10 @@ def login():
         msg = user_object.login(email, password)
         if msg == "Successfully logged in, create shoppinglist!":
             session['email'] = email
+            global user # pylint: disable=invalid-name,global-statement
+            user = email
             return render_template('shoppinglist.html', resp=msg)
-        else:
-            return render_template('login.html', resp=msg)
+        return render_template('login.html', resp=msg)
     return render_template("login.html")
 
 
@@ -64,15 +63,15 @@ def login():
 def shoppinglist():
     """Handles shopping list creation
     """
-    user = session['email']
+    global user # pylint: disable=invalid-name,global-statement
     user_lists = shoplist_obj.get_owner(user)
+    print user_lists
     if request.method == 'POST':
         list_name = request.form['list-name']
         msg = shoplist_obj.create_list(list_name, user)
         if isinstance(msg, list):
             return render_template('shoppinglist.html', shoppinglist=msg)
-        else:
-            return render_template('shoppinglist.html', resp=msg, shoppinglist=user_lists)
+        return render_template('shoppinglist.html', resp=msg, shoppinglist=user_lists)
     return render_template('shoppinglist.html', shoppinglist=user_lists)
 
 
@@ -81,7 +80,7 @@ def shoppinglist():
 def save_edits():
     """ Handles editing of shopping lists """
 
-    user = session['email']
+    global user # pylint: disable=invalid-name,global-statement
     user_lists = shoplist_obj.get_owner(user)
     if request.method == 'POST':
         edit_name = request.form['list_name']
@@ -90,9 +89,8 @@ def save_edits():
         if msg == shoplist_obj.shopping_list:
             response = "Successfully edited bucket " + org_name
             return render_template('shoppinglist.html', resp=response, shoppinglist=msg)
-        else:
-            #existing = shoplist_obj.shopping_list
-            return render_template('shoppinglist.html', resp=msg, shoppinglist=user_lists)
+        #existing = shoplist_obj.shopping_list
+        return render_template('shoppinglist.html', resp=msg, shoppinglist=user_lists)
     return render_template('shoppinglist.html')
 
 
@@ -101,7 +99,7 @@ def save_edits():
 def delete_shoppinglist():
     """Handles deletion of shoppinglist and its items
     """
-    user = session['email']
+    global user # pylint: disable=invalid-name,global-statement
     if request.method == 'POST':
         del_name = request.form['list_name']
         msg = shoplist_obj.delete_list(del_name, user)
@@ -116,7 +114,7 @@ def delete_shoppinglist():
 def shoppingitems(shoplist):
     """Handles shopping items creation
     """
-    user = session['email']
+    global user # pylint: disable=invalid-name,global-statement
     # Get a list of users items for a specific shopping list
     user_items = shopitems_obj.owner_items(user, shoplist)
     # specific shopping list
@@ -139,7 +137,7 @@ def shoppingitems(shoplist):
 def edit_item():
     """ Handles editing of items
     """
-    user = session['email']
+    global user # pylint: disable=invalid-name,global-statement
     if request.method == 'POST':
         item_name = request.form['item_name']
         item_name_org = request.form['item_name_org']
@@ -165,7 +163,7 @@ def edit_item():
 def delete_item():
     """ Handles deletion of items
     """
-    user = session['email']
+    global user # pylint: disable=invalid-name,global-statement
     if request.method == 'POST':
         item_name = request.form['item_name']
         list_name = request.form['list_name']
