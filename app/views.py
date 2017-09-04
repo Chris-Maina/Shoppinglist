@@ -67,7 +67,7 @@ def shoppinglist():
     """Handles shopping list creation
     """
     global user  # pylint: disable=invalid-name,global-statement
-    user_lists = shoplist_obj.get_owner(user)
+    user_lists = shoplist_obj.get_owner(user=user)
     print user_lists
     if request.method == 'POST':
         list_name = request.form['list-name']
@@ -84,7 +84,7 @@ def save_edits():
     """ Handles editing of shopping lists """
 
     global user  # pylint: disable=invalid-name,global-statement
-    user_lists = shoplist_obj.get_owner(user)
+    user_lists = shoplist_obj.get_owner(user=user)
     if request.method == 'POST':
         edit_name = request.form['list_name']
         org_name = request.form['list_name_org']
@@ -105,7 +105,7 @@ def delete_shoppinglist():
     global user  # pylint: disable=invalid-name,global-statement
     if request.method == 'POST':
         del_name = request.form['list_name']
-        msg = shoplist_obj.delete_list(del_name, user)
+        msg = shoplist_obj.delete_list(del_name, user=user)
         # Delete the its items
         shopitems_obj.deleted_list_items(del_name)
         response = "Successfuly deleted bucket " + del_name
