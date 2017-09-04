@@ -1,9 +1,9 @@
 """ views.py """
 from functools import wraps
-from flask import render_template, request, session
+from flask import render_template, request, session, redirect
 from app import app, user_object, shoplist_obj, shopitems_obj
 
-user =  # pylint: disable=invalid-name,global-statement
+user = None # pylint: disable=invalid-name,global-statement
 def authorize(f): # pylint: disable=invalid-name
     """Function to authenticate users when accessing other pages"""
     @wraps(f)
@@ -53,7 +53,8 @@ def login():
             session['email'] = email
             global user # pylint: disable=invalid-name,global-statement
             user = email
-            return render_template('shoppinglist.html', resp=msg)
+            user_lists = shoplist_obj.get_owner(user)
+            return render_template('shoppinglist.html', resp=msg, shoppinglist=user_lists)
         return render_template('login.html', resp=msg)
     return render_template("login.html")
 
