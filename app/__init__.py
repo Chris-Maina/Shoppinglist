@@ -11,8 +11,7 @@ app.secret_key = 'dresscodesleepbehappy'
 user_object = useraccounts.UserClass()
 shoplist_obj = shoppinglist.ShoppinglistClass()
 shopitems_obj = shoppingitems.ShoppingItemsClass()
-# Load the views
-from app import views
+
 
 # Load the config file
 app.config.from_object('config')
