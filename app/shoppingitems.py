@@ -40,6 +40,7 @@ class ShoppingItemsClass(object):
                 'list': listname,
                 'owner': user
             }
+            print activity_dict
             self.item_list.append(activity_dict)
             return self.owner_items(user, listname)
         return "No special characters (. , ! space [] )"
@@ -89,6 +90,5 @@ class ShoppingItemsClass(object):
         Args
              shopping list name
         """
-        for i in range(len(self.item_list) - 1):
-            if self.item_list[i]['list'] == list_name:
-                del self.item_list[i]
+        self.item_list[:] = [
+            item for item in self.item_list if item.get('list') != list_name]
