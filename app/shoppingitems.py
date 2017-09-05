@@ -42,8 +42,7 @@ class ShoppingItemsClass(object):
             }
             self.item_list.append(activity_dict)
             return self.owner_items(user, listname)
-        else:
-            return "No special characters (. , ! space [] )"
+        return "No special characters (. , ! space [] )"
 
     def edit_item(self, item_name, org_item_name, list_name, user):
         """Handles editing of items
@@ -90,7 +89,6 @@ class ShoppingItemsClass(object):
         Args
              shopping list name
         """
-        for i in range(len(self.item_list)):
+        for i in range(len(self.item_list) - 1):
             if self.item_list[i]['list'] == list_name:
                 del self.item_list[i]
-                break

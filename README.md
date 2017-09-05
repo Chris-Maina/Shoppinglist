@@ -31,6 +31,11 @@ developed to use data structures only i.e.
     
 ## Running the application
     $  (yourenvname) python run.py
+    
+## Testing the application
+cd into project_folder folder, RUN the following command
+   * $ nosetests --with-coverage --cover-package=tests && coverage report
+
 ## How to use appliction
 * Register an account
 * Login with the credentials used during registration

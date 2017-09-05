@@ -28,8 +28,9 @@ class TestCasesItems(unittest.TestCase):
     def test_existing_item(self):
         """Check to see item name exists or not
          """
-        self.item_class_obj.item_list = [{'owner': 'maina@gmail.com', 'list': 'Easter', 'name': 'Bread'}, {
-            'owner': 'maina@gmail.com', 'list': 'Easter', 'name': 'Blueband'}]
+        self.item_class_obj.item_list = \
+            [{'owner': 'maina@gmail.com', 'list': 'Easter', 'name': 'Bread'}, {
+                'owner': 'maina@gmail.com', 'list': 'Easter', 'name': 'Blueband'}]
         msg = self.item_class_obj.add_item(
             "Easter", "Bread", "maina@gmail.com")
         self.assertEqual(msg, "Shopping item name already exists")
@@ -43,10 +44,11 @@ class TestCasesItems(unittest.TestCase):
 
     def test_owner(self):
         """ Check for shopping items belonging to owner"""
-        self.item_class_obj.item_list = [{'owner': 'maina@gmail.com', 'list': 'Easter', 'name': 'Bread'},
-                                         {'owner': 'njekama@gmail.com',
-                                          'list': 'Easter', 'name': 'Blueband'},
-                                         {'owner': 'maina@gmail.com', 'list': 'Easter', 'name': 'Blueband'}]
+        self.item_class_obj.item_list = \
+            [{'owner': 'maina@gmail.com', 'list': 'Easter', 'name': 'Bread'},
+             {'owner': 'njekama@gmail.com',
+              'list': 'Easter', 'name': 'Blueband'},
+             {'owner': 'maina@gmail.com', 'list': 'Easter', 'name': 'Blueband'}]
         user = "njekama@gmail.com"
         shoppinglist = "Easter"
         msg = self.item_class_obj.owner_items(user, shoppinglist)
@@ -64,17 +66,20 @@ class TestCasesItems(unittest.TestCase):
     def test_editing_item(self):
         """Check for edits to item name
         """
-        self.item_class_obj.item_list = [{'owner': 'maina@gmail.com', 'list': 'Adventure', 'name': 'Snacks'}, {
+        self.item_class_obj.item_list = \
+        [{'owner': 'maina@gmail.com', 'list': 'Adventure', 'name': 'Snacks'}, {
             'owner': 'maina@gmail.com', 'list': 'Adventure', 'name': 'Booze'}]
         msg = self.item_class_obj.edit_item(
             'Soda', 'Booze', 'Adventure', "maina@gmail.com")
-        self.assertEqual(msg, [{'owner': 'maina@gmail.com', 'list': 'Adventure', 'name': 'Snacks'}, {
+        self.assertEqual(msg, \
+        [{'owner': 'maina@gmail.com', 'list': 'Adventure', 'name': 'Snacks'}, {
             'owner': 'maina@gmail.com', 'list': 'Adventure', 'name': 'Soda'}])
 
     def test_edit_existing_itemname(self):
         """Check if edit name provided is similar to an existing item
         """
-        self.item_class_obj.item_list = [{'owner': 'maina@gmail.com', 'list': 'Adventure', 'name': 'Snacks'}, {
+        self.item_class_obj.item_list = \
+        [{'owner': 'maina@gmail.com', 'list': 'Adventure', 'name': 'Snacks'}, {
             'owner': 'maina@gmail.com', 'list': 'Adventure', 'name': 'Booze'}]
         msg = self.item_class_obj.edit_item(
             'Snacks', 'Booze', 'Adventure', "maina@gmail.com")
@@ -83,7 +88,8 @@ class TestCasesItems(unittest.TestCase):
     def test_delete_item(self):
         """Check to see if item is deleted
         """
-        self.item_class_obj.item_list = [{'owner': 'maina@gmail.com', 'list': 'Adventure', 'name': 'Snacks'}, {
+        self.item_class_obj.item_list = \
+        [{'owner': 'maina@gmail.com', 'list': 'Adventure', 'name': 'Snacks'}, {
             'owner': 'maina@gmail.com', 'list': 'Adventure', 'name': 'Booze'}]
         msg = self.item_class_obj.delete_item(
             'Booze', "maina@gmail.com", 'Adventure')
@@ -92,7 +98,8 @@ class TestCasesItems(unittest.TestCase):
     def test_deleted_list(self):
         """Check if bucket deleted will have its activities deleted to
         """
-        self.item_class_obj.item_list = [{'owner': 'maina@gmail.com', 'list': 'Adventure', 'name': 'Snacks'}, {
+        self.item_class_obj.item_list = \
+        [{'owner': 'maina@gmail.com', 'list': 'Adventure', 'name': 'Snacks'}, {
             'owner': 'maina@gmail.com', 'list': 'Adventure', 'name': 'Booze'}]
         res = self.item_class_obj.deleted_list_items('Adventure')
         self.assertEqual(res, None)

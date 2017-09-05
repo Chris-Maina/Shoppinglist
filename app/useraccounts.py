@@ -27,17 +27,16 @@ class UserClass(object):
         for user in self.user_list:
             if email == user['email']:
                 return "User already exists. Please login"
+        # check for password length and mismatch
+        if len(password) < 6:
+            return "Your password should be at least 6 characters long"
+        elif password == cpassword:
+            user_dict['username'] = username
+            user_dict['email'] = email
+            user_dict['password'] = password
+            self.user_list.append(user_dict)
         else:
-            # check for password length and mismatch
-            if len(password) < 6:
-                return "Your password should be at least 6 characters long"
-            elif password == cpassword:
-                user_dict['username'] = username
-                user_dict['email'] = email
-                user_dict['password'] = password
-                self.user_list.append(user_dict)
-            else:
-                return "Password mismatch"
+            return "Password mismatch"
         return "Successfully registered. You can now login!"
 
     def login(self, email, password):
@@ -54,6 +53,5 @@ class UserClass(object):
             if email == user['email']:
                 if password == user['password']:
                     return "Successfully logged in, create shoppinglist!"
-                else:
-                    return "Password mismatch"
+                return "Password mismatch"
         return "You have no account,please sign up"
