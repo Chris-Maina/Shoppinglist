@@ -53,7 +53,7 @@ def login():
         msg = user_object.login(email, password)
         if msg == "Successfully logged in, create shoppinglist!":
             session['email'] = email
-            global user  # pylint: disable=invalid-name,global-statement
+            global user
             user = email
             user_lists = shoplist_obj.get_owner(user)
             return render_template('shoppinglist.html', resp=msg, shoppinglist=user_lists)
