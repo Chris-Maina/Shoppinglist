@@ -67,8 +67,7 @@ def login():
 def shoppinglist():
     """Handles shopping list creation
     """
-    global user
-    user_lists = shoplist_obj.get_owner(user=user)
+    user_lists = shoplist_obj.get_owner(user)
     if request.method == 'POST':
         list_name = request.form['list-name']
         msg = shoplist_obj.create_list(list_name, user)
@@ -82,8 +81,6 @@ def shoppinglist():
 @authorize
 def save_edits():
     """ Handles editing of shopping lists """
-
-    global user
     user_lists = shoplist_obj.get_owner(user=user)
     if request.method == 'POST':
         edit_name = request.form['list_name']
@@ -102,7 +99,6 @@ def save_edits():
 def delete_shoppinglist():
     """Handles deletion of shoppinglist and its items
     """
-    global user
     if request.method == 'POST':
         del_name = request.form['list_name']
         msg = shoplist_obj.delete_list(del_name, user=user)
@@ -117,7 +113,6 @@ def delete_shoppinglist():
 def shoppingitems(shoplist):
     """Handles shopping items creation
     """
-    global user
     # Get a list of users items for a specific shopping list
     user_items = shopitems_obj.owner_items(user, shoplist)
     # specific shopping list
@@ -140,7 +135,6 @@ def shoppingitems(shoplist):
 def edit_item():
     """ Handles editing of items
     """
-    global user
     if request.method == 'POST':
         item_name = request.form['item_name']
         item_name_org = request.form['item_name_org']
@@ -166,7 +160,6 @@ def edit_item():
 def delete_item():
     """ Handles deletion of items
     """
-    global user
     if request.method == 'POST':
         item_name = request.form['item_name']
         list_name = request.form['list_name']
