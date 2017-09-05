@@ -33,10 +33,8 @@ developed to use data structures only i.e.
     $  (yourenvname) python run.py
     
 ## Testing the application
-cd into tests folder, RUN the following commands
-   * $ nosetests test_useraccounts.py
-   * $ nosetests test_shoppinglist.py
-   * $ nosetests test_shoppingitems.py
+cd into project_folder folder, RUN the following command
+   * $ nosetests --with-coverage --cover-package=tests && coverage report
 
 ## How to use appliction
 * Register an account
