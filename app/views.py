@@ -2,6 +2,7 @@
 from functools import wraps
 from flask import render_template, request, session
 from app import app, user_object, shoplist_obj, shopitems_obj
+
 # Variable stores user's email
 user = None
 
