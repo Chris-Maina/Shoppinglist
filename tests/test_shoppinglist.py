@@ -27,8 +27,9 @@ class TestCasesShoppingList(unittest.TestCase):
     def test_existing_shoppinglist(self):
         """Check to see bucket name exists or not
          """
-        self.shopping_class_obj.shopping_list = [{'owner': 'mainachrisw@gmail.com', 'name': 'Easter'},
-                                                 {'owner': 'mainachrisw@gmail.com', 'name': 'Christmass'}]
+        self.shopping_class_obj.shopping_list = \
+        [{'owner': 'mainachrisw@gmail.com', 'name': 'Easter'},
+         {'owner': 'mainachrisw@gmail.com', 'name': 'Christmass'}]
         msg = self.shopping_class_obj.create_list(
             "Easter", "mainachrisw@gmail.com")
         self.assertEqual(msg, "Shopping list name already exists.")
@@ -49,7 +50,7 @@ class TestCasesShoppingList(unittest.TestCase):
         user = "maina@gmail.com"
         msg = self.shopping_class_obj.get_owner(user)
         self.assertEqual(msg, [{'owner': 'maina@gmail.com', 'name': 'Easter'}, {
-                         'owner': 'maina@gmail.com', 'name': 'Christmass'}])
+            'owner': 'maina@gmail.com', 'name': 'Christmass'}])
 
     def test_correct_output(self):
         """Check for correct shopping list creation
@@ -81,12 +82,15 @@ class TestCasesShoppingList(unittest.TestCase):
     def test_delete_shoppinglist(self):
         """Check to see if shoppinglist is deleted
         """
-        self.shopping_class_obj.shopping_list = [{'owner': 'maina@gmail.com', 'name': 'Rave'}, {
-            'owner': 'maina@gmail.com', 'name': 'Adventure'}, {'owner': 'maina@gmail.com', 'name': 'Shagz'}]
+        self.shopping_class_obj.shopping_list = \
+        [{'owner': 'maina@gmail.com', 'name': 'Rave'}, \
+        {'owner': 'maina@gmail.com', 'name': 'Adventure'}, \
+        {'owner': 'maina@gmail.com', 'name': 'Shagz'}]
         msg = self.shopping_class_obj.delete_list(
             'Rave', "maina@gmail.com")
-        self.assertEqual(msg, [{
-            'owner': 'maina@gmail.com', 'name': 'Adventure'}, {'owner': 'maina@gmail.com', 'name': 'Shagz'}])
+        self.assertEqual(msg, \
+        [{'owner': 'maina@gmail.com', 'name': 'Adventure'}, \
+        {'owner': 'maina@gmail.com', 'name': 'Shagz'}])
 
 
 if __name__ == '__main__':
