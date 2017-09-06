@@ -40,7 +40,6 @@ class ShoppingItemsClass(object):
                 'list': listname,
                 'owner': user
             }
-            print activity_dict
             self.item_list.append(activity_dict)
             return self.owner_items(user, listname)
         return "No special characters (. , ! space [] )"
