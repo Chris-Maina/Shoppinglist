@@ -36,7 +36,7 @@ developed to use data structures only i.e.
 cd into project_folder folder, RUN the following command
    * $ nosetests --with-coverage --cover-package=tests && coverage report
 
-## How to use appliction
+## How to use application
 * Register an account
 * Login with the credentials used during registration
 * Add shopping list(s)

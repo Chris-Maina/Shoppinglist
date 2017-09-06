@@ -1,4 +1,5 @@
 """ useraccounts.py """
+import re
 
 
 class UserClass(object):
@@ -30,6 +31,11 @@ class UserClass(object):
         # check for password length and mismatch
         if len(password) < 6:
             return "Your password should be at least 6 characters long"
+        elif not re.match("^[a-zA-Z0-9_]*$", username):
+            return "No special characters (. , ! space [] )"
+        # regular expression for email
+        elif not re.match(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", email):
+            return "Please provide a valid email address"
         elif password == cpassword:
             user_dict['username'] = username
             user_dict['email'] = email
