@@ -89,6 +89,5 @@ class ShoppingItemsClass(object):
         Args
              shopping list name
         """
-        for i in range(len(self.item_list) - 1):
-            if self.item_list[i]['list'] == list_name:
-                del self.item_list[i]
+        self.item_list[:] = [
+            item for item in self.item_list if item.get('list') != list_name]
