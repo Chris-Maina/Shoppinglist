@@ -125,6 +125,8 @@ def shoppingitems(shoplist):
             new_list = [item['name']
                         for item in msg if item['list'] == shoplist]
             return render_template("shoppingitems.html", itemlist=new_list, name=shoplist)
+        # msg is not a list
+        return render_template("shoppingitems.html", resp=msg, name=shoplist, itemlist=new_list)
     else:
         res = "You can now add your items"
         return render_template('shoppingitems.html', resp=res, name=shoplist, itemlist=new_list)
