@@ -62,6 +62,32 @@ class AccountTestCases(unittest.TestCase):
         self.assertEqual(
             msg, "Your password should be at least 6 characters long")
 
+    def test_case_special_char(self):
+        """
+        Args
+            username(string):name of user
+            email(string):user email
+            password(string):user password
+        Returns
+            error message
+        """
+        msg = self.user.registeruser(
+            "Chris maina", "mainachris@gmail.com", "chrismaina", "chrismaina")
+        self.assertEqual(msg, "No special characters (. , ! space [] )")
+
+    def test_case_invalid_email(self):
+        """
+        Args
+            username(string):name of user
+            email(string):user email
+            password(string):user password
+        Returns
+            error message
+        """
+        msg = self.user.registeruser(
+            "Chris", "mainachris@gmail", "chrismaina", "chrismaina")
+        self.assertEqual(msg, "Please provide a valid email address")
+
     def test_case_correct_input(self):
         """
         Args
