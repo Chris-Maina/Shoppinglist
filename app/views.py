@@ -39,7 +39,7 @@ def register():
         msg = user_object.registeruser(username, email, password, cpassword)
         if msg == "Successfully registered. You can now login!":
             return render_template("login.html", resp=msg)
-        return render_template("register.html", resp=msg)
+        return render_template("register.html", error=msg)
 
     return render_template("register.html")
 
@@ -58,7 +58,7 @@ def login():
             user = email
             user_lists = shoplist_obj.get_owner(user)
             return render_template('shoppinglist.html', resp=msg, shoppinglist=user_lists)
-        return render_template('login.html', resp=msg)
+        return render_template('login.html', error=msg)
     return render_template("login.html")
 
 
@@ -74,7 +74,7 @@ def shoppinglist():
         msg = shoplist_obj.create_list(list_name, user)
         if isinstance(msg, list):
             return render_template('shoppinglist.html', shoppinglist=msg)
-        return render_template('shoppinglist.html', resp=msg, shoppinglist=user_lists)
+        return render_template('shoppinglist.html', error=msg, shoppinglist=user_lists)
     return render_template('shoppinglist.html', shoppinglist=user_lists)
 
 
@@ -82,16 +82,17 @@ def shoppinglist():
 @authorize
 def save_edits():
     """ Handles editing of shopping lists """
-    user_lists = shoplist_obj.get_owner(user=user)
+    if user == session['email']:
+        user_lists = shoplist_obj.get_owner(user=user)
     if request.method == 'POST':
         edit_name = request.form['list_name']
         org_name = request.form['list_name_org']
         msg = shoplist_obj.edit_list(edit_name, org_name, user)
         if msg == shoplist_obj.shopping_list:
-            response = "Successfully edited bucket " + org_name
+            response = "Successfully edited list " + org_name
             return render_template('shoppinglist.html', resp=response, shoppinglist=msg)
         #existing = shoplist_obj.shopping_list
-        return render_template('shoppinglist.html', resp=msg, shoppinglist=user_lists)
+        return render_template('shoppinglist.html', error=msg, shoppinglist=user_lists)
     return render_template('shoppinglist.html')
 
 
@@ -127,7 +128,7 @@ def shoppingitems(shoplist):
                         for item in msg if item['list'] == shoplist]
             return render_template("shoppingitems.html", itemlist=new_list, name=shoplist)
         # msg is not a list
-        return render_template("shoppingitems.html", resp=msg, name=shoplist, itemlist=new_list)
+        return render_template("shoppingitems.html", error=msg, name=shoplist, itemlist=new_list)
     else:
         res = "You can now add your items"
         return render_template('shoppingitems.html', resp=res, name=shoplist, itemlist=new_list)
@@ -155,7 +156,7 @@ def edit_item():
             user_items = shopitems_obj.owner_items(user, list_name)
             new_list = [item['name']
                         for item in user_items if item['list'] == list_name]
-    return render_template("shoppingitems.html", itemlist=new_list, name=list_name, resp=msg)
+    return render_template("shoppingitems.html", itemlist=new_list, name=list_name, error=msg)
 
 
 @app.route('/delete-item', methods=['GET', 'POST'])
