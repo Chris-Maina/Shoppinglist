@@ -30,7 +30,7 @@ class ShoppinglistClass(object):
                 shopping lists
         """
         # Check for special characters
-        if re.match("^[a-zA-Z0-9_]*$", list_name):
+        if re.match("^[a-zA-Z0-9 _]*$", list_name):
             # Get users shopping lists
             my_shopping_lists = self.get_owner(user)
             # check if bucket name exists
@@ -53,7 +53,7 @@ class ShoppinglistClass(object):
             returns
                 error message or a list of shopping
         """
-        if re.match("^[a-zA-Z0-9_]*$", edit_name):
+        if re.match("^[a-zA-Z0-9 _]*$", edit_name):
             # Get users lists
             my_shopping_lists = self.get_owner(user)
             for item in my_shopping_lists:
