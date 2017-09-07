@@ -64,7 +64,7 @@ class ShoppingItemsClass(object):
                         item.update(edit_dict)
                 else:
                     return "Item name already exists"
-        return my_items
+        return self.owner_items(user, list_name)
 
     def delete_item(self, item_name, user, list_name):
         """Handles deletion of bucket activities
