@@ -7,7 +7,15 @@
 			{{ resp }}
 		</div>
 
-		{%endif%} {% if name in name%}
+		{%endif%}
+		{%if error in error%}
+
+        <div class="alert alert-danger" role="alert" id="reg-alert">
+            {{ error }}
+        </div>
+
+        {%endif%}  
+		{% if name in name%}
 		<div>
 			<h4 style="margin:0px 0px 30px 10px"><strong>List name: {{ name }}</strong></h4>
 		</div>

@@ -32,7 +32,7 @@ class TestCasesShoppingList(unittest.TestCase):
          {'owner': 'mainachrisw@gmail.com', 'name': 'Christmass'}]
         msg = self.shopping_class_obj.create_list(
             "Easter", "mainachrisw@gmail.com")
-        self.assertEqual(msg, "Shopping list name already exists.")
+        self.assertIn("name already exists.", msg)
 
     def test_special_characters(self):
         """Check for special characters in list name
@@ -77,7 +77,7 @@ class TestCasesShoppingList(unittest.TestCase):
             'owner': 'maina@gmail.com', 'name': 'Shagz'}]
         msg = self.shopping_class_obj.edit_list(
             'Shagz', 'Rave', "maina@gmail.com")
-        self.assertEqual(msg, "Shopping list name already exists")
+        self.assertIn("name already exists", msg)
 
     def test_delete_shoppinglist(self):
         """Check to see if shoppinglist is deleted

@@ -46,7 +46,7 @@ class AccountTestCases(unittest.TestCase):
             "chris", "mainachris@gmail.com", "chrismaina", "chrismaina")
         msg = self.user.registeruser(
             "chris", "mainachris@gmail.com", "chrismaina", "chrismaina")
-        self.assertEqual(msg, "User already exists. Please login")
+        self.assertIn("User already exists", msg)
 
     def test_case_short_pwd(self):
         """
@@ -73,7 +73,7 @@ class AccountTestCases(unittest.TestCase):
         """
         msg = self.user.registeruser(
             "Chris maina", "mainachris@gmail.com", "chrismaina", "chrismaina")
-        self.assertEqual(msg, "No special characters (. , ! space [] )")
+        self.assertIn("No special characters ", msg)
 
     def test_case_invalid_email(self):
         """
@@ -99,7 +99,7 @@ class AccountTestCases(unittest.TestCase):
         """
         msg = self.user.registeruser(
             "Chris", "mainachris@gmail.com", "chrismaina", "chrismaina")
-        self.assertEqual(msg, "Successfully registered. You can now login!")
+        self.assertIn("Successfully registered", msg)
 
     def test_case_login_noaccount(self):
         """
@@ -135,7 +135,7 @@ class AccountTestCases(unittest.TestCase):
         self.user.user_list = [
             {'username': 'chris', 'password': 'chrismaina', 'email': 'mainachrisw@gmail.com'}]
         msg = self.user.login("mainachrisw@gmail.com", "chrismaina")
-        self.assertEqual(msg, "Successfully logged in, create shoppinglist!")
+        self.assertIn("create shoppinglist!", msg)
 
 
 if __name__ == '__main__':
