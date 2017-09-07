@@ -29,7 +29,7 @@ class ShoppingItemsClass(object):
                 list of items
         """
         # Check for special characters
-        if re.match("^[a-zA-Z0-9_]*$", item_name):
+        if re.match("^[a-zA-Z0-9 _]*$", item_name):
             # Get users items
             my_items = self.owner_items(user, listname)
             for item in my_items:
