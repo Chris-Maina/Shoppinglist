@@ -57,14 +57,15 @@ class ShoppinglistClass(object):
             # Get users lists
             my_shopping_lists = self.get_owner(user)
             for item in my_shopping_lists:
-                if edit_name == item['name']:
+                if edit_name != item['name']:
+                    if org_name == item['name']:
+                        del item['name']
+                        edit_dict = {
+                            'name': edit_name,
+                        }
+                        item.update(edit_dict)
+                else:
                     return "Shopping list name already exists"
-                elif org_name == item['name']:
-                    del item['name']
-                    edit_dict = {
-                        'name': edit_name
-                    }
-                    item.update(edit_dict)
         else:
             return "No special characters (. , ! space [] )"
         return self.get_owner(user)
