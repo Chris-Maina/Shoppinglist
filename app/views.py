@@ -67,7 +67,8 @@ def login():
 def shoppinglist():
     """Handles shopping list creation
     """
-    user_lists = shoplist_obj.get_owner(user)
+    if user == session['email']:
+        user_lists = shoplist_obj.get_owner(user)
     if request.method == 'POST':
         list_name = request.form['list-name']
         msg = shoplist_obj.create_list(list_name, user)
