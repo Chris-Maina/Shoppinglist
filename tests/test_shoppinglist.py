@@ -70,6 +70,15 @@ class TestCasesShoppingList(unittest.TestCase):
         self.assertEqual(msg, [{'owner': 'maina@gmail.com', 'name': 'Christmass'}, {
             'owner': 'maina@gmail.com', 'name': 'Easter'}])
 
+    def test_editing_invalid_shoppinglist_name(self):
+        """Check for edits to shoppinglist name
+        """
+        self.shopping_class_obj.shopping_list = [{'owner': 'maina@gmail.com', 'name': 'Rave'}, {
+            'owner': 'maina@gmail.com', 'name': 'Easter'}]
+        msg = self.shopping_class_obj.edit_list(
+            'Christmass', 'Rave-westie', "maina@gmail.com")
+        self.assertIn("No special characters", msg)
+    
     def test_edit_existing_shoppinglist(self):
         """Check if edit name provided is similar to an existing shoppinglist
         """
