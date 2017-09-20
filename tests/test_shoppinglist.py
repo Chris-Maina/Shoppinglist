@@ -76,7 +76,7 @@ class TestCasesShoppingList(unittest.TestCase):
         self.shopping_class_obj.shopping_list = [{'owner': 'maina@gmail.com', 'name': 'Rave'}, {
             'owner': 'maina@gmail.com', 'name': 'Easter'}]
         msg = self.shopping_class_obj.edit_list(
-            'Christmass', 'Rave-westie', "maina@gmail.com")
+            'Christmass!', 'Rave', "maina@gmail.com")
         self.assertIn("No special characters", msg)
     
     def test_edit_existing_shoppinglist(self):
