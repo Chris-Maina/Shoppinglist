@@ -59,7 +59,6 @@ class ShoppinglistClass(object):
             for item in my_shopping_lists:
                 if edit_name != item['name']:
                     if org_name == item['name']:
-                        del item['name']
                         edit_dict = {
                             'name': edit_name,
                         }
