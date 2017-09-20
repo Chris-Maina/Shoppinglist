@@ -54,10 +54,12 @@ def login():
         msg = user_object.login(email, password)
         if msg == "Successfully logged in, create shoppinglist!":
             session['email'] = email
-            global user
-            user = email
-            user_lists = shoplist_obj.get_owner(user)
-            return render_template('shoppinglist.html', resp=msg, shoppinglist=user_lists)
+            for email in user_object.user_list:
+                if session['email'] == email['email']:
+                    global user
+                    user = email['email']
+                    user_lists = shoplist_obj.get_owner(user)
+                    return render_template('shoppinglist.html', resp=msg, shoppinglist=user_lists)
         return render_template('login.html', error=msg)
     return render_template("login.html")
 
@@ -67,8 +69,11 @@ def login():
 def shoppinglist():
     """Handles shopping list creation
     """
-    if user == session['email']:
-        user_lists = shoplist_obj.get_owner(user)
+    for email in user_object.user_list:
+        if session['email'] == email['email']:
+            global user
+            user = email['email']
+            user_lists = shoplist_obj.get_owner(user)
     if request.method == 'POST':
         list_name = request.form['list-name']
         msg = shoplist_obj.create_list(list_name, user)
@@ -82,8 +87,11 @@ def shoppinglist():
 @authorize
 def save_edits():
     """ Handles editing of shopping lists """
-    if user == session['email']:
-        user_lists = shoplist_obj.get_owner(user=user)
+    for email in user_object.user_list:
+        if session['email'] == email['email']:
+            global user
+            user = email['email']
+            user_lists = shoplist_obj.get_owner(user)
     if request.method == 'POST':
         edit_name = request.form['list_name']
         org_name = request.form['list_name_org']
@@ -102,6 +110,10 @@ def save_edits():
 def delete_shoppinglist():
     """Handles deletion of shoppinglist and its items
     """
+    for email in user_object.user_list:
+        if session['email'] == email['email']:
+            global user
+            user = email['email']
     if request.method == 'POST':
         del_name = request.form['list_name']
         msg = shoplist_obj.delete_list(del_name, user=user)
@@ -117,6 +129,10 @@ def shoppingitems(shoplist):
     """Handles shopping items creation
     """
     # Get a list of users items for a specific shopping list
+    for email in user_object.user_list:
+        if session['email'] == email['email']:
+            global user
+            user = email['email']
     user_items = shopitems_obj.owner_items(user, shoplist)
     # specific shopping list
     new_list = [item['name']
@@ -140,6 +156,10 @@ def shoppingitems(shoplist):
 def edit_item():
     """ Handles editing of items
     """
+    for email in user_object.user_list:
+        if session['email'] == email['email']:
+            global user
+            user = email['email']
     if request.method == 'POST':
         item_name = request.form['item_name']
         item_name_org = request.form['item_name_org']
@@ -165,6 +185,10 @@ def edit_item():
 def delete_item():
     """ Handles deletion of items
     """
+    for email in user_object.user_list:
+        if session['email'] == email['email']:
+            global user
+            user = email['email']
     if request.method == 'POST':
         item_name = request.form['item_name']
         list_name = request.form['list_name']
