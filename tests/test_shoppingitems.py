@@ -1,6 +1,7 @@
 """test_shoppingitems.py"""
 import unittest
 from app.shoppingitems import ShoppingItemsClass
+from app.shoppinglist import ShoppinglistClass
 
 
 class TestCasesItems(unittest.TestCase):
@@ -19,6 +20,7 @@ class TestCasesItems(unittest.TestCase):
         """Setting up ShoppingItems class
         """
         self.item_class_obj = ShoppingItemsClass()
+        self.list_class_obj = ShoppinglistClass()
 
     def tearDown(self):
         """Removing ShoppingItems class
@@ -67,20 +69,20 @@ class TestCasesItems(unittest.TestCase):
         """Check for edits to item name
         """
         self.item_class_obj.item_list = \
-        [{'owner': 'maina@gmail.com', 'list': 'Adventure', 'name': 'Snacks'}, {
-            'owner': 'maina@gmail.com', 'list': 'Adventure', 'name': 'Booze'}]
+            [{'owner': 'maina@gmail.com', 'list': 'Adventure', 'name': 'Snacks'}, {
+                'owner': 'maina@gmail.com', 'list': 'Adventure', 'name': 'Booze'}]
         msg = self.item_class_obj.edit_item(
             'Soda', 'Booze', 'Adventure', "maina@gmail.com")
-        self.assertEqual(msg, \
-        [{'owner': 'maina@gmail.com', 'list': 'Adventure', 'name': 'Snacks'}, {
-            'owner': 'maina@gmail.com', 'list': 'Adventure', 'name': 'Soda'}])
+        self.assertEqual(msg,
+                         [{'owner': 'maina@gmail.com', 'list': 'Adventure', 'name': 'Snacks'}, {
+                             'owner': 'maina@gmail.com', 'list': 'Adventure', 'name': 'Soda'}])
 
     def test_edit_existing_itemname(self):
         """Check if edit name provided is similar to an existing item
         """
         self.item_class_obj.item_list = \
-        [{'owner': 'maina@gmail.com', 'list': 'Adventure', 'name': 'Snacks'}, {
-            'owner': 'maina@gmail.com', 'list': 'Adventure', 'name': 'Booze'}]
+            [{'owner': 'maina@gmail.com', 'list': 'Adventure', 'name': 'Snacks'}, {
+                'owner': 'maina@gmail.com', 'list': 'Adventure', 'name': 'Booze'}]
         msg = self.item_class_obj.edit_item(
             'Snacks', 'Booze', 'Adventure', "maina@gmail.com")
         self.assertIn("name already exists", msg)
@@ -89,8 +91,8 @@ class TestCasesItems(unittest.TestCase):
         """Check to see if item is deleted
         """
         self.item_class_obj.item_list = \
-        [{'owner': 'maina@gmail.com', 'list': 'Adventure', 'name': 'Snacks'}, {
-            'owner': 'maina@gmail.com', 'list': 'Adventure', 'name': 'Booze'}]
+            [{'owner': 'maina@gmail.com', 'list': 'Adventure', 'name': 'Snacks'}, {
+                'owner': 'maina@gmail.com', 'list': 'Adventure', 'name': 'Booze'}]
         msg = self.item_class_obj.delete_item(
             'Booze', "maina@gmail.com", 'Adventure')
         self.assertEqual(msg, ['Snacks'])
@@ -99,10 +101,22 @@ class TestCasesItems(unittest.TestCase):
         """Check if bucket deleted will have its activities deleted to
         """
         self.item_class_obj.item_list = \
-        [{'owner': 'maina@gmail.com', 'list': 'Adventure', 'name': 'Snacks'}, {
-            'owner': 'maina@gmail.com', 'list': 'Adventure', 'name': 'Booze'}]
+            [{'owner': 'maina@gmail.com', 'list': 'Adventure', 'name': 'Snacks'}, {
+                'owner': 'maina@gmail.com', 'list': 'Adventure', 'name': 'Booze'}]
         res = self.item_class_obj.deleted_list_items('Adventure')
         self.assertEqual(res, None)
+
+    def test_edited_list(self):
+        """Check if bucket edited will have its activities
+        """
+        self.list_class_obj.shopping_list = [{'owner': 'maina@gmail.com', 'name': 'Rave'}, {
+            'owner': 'maina@gmail.com', 'name': 'Easter'}]
+        self.item_class_obj.add_item("Rave", "Booze", "maina@gmail.com")
+        self.list_class_obj.edit_list(
+            'Christmass', 'Rave', "maina@gmail.com")
+        self.item_class_obj.edited_list_items(
+            'Christmass', 'Rave', "maina@gmail.com")
+        self.assertEqual([{'owner': 'maina@gmail.com', 'list': 'Christmass', 'name': 'Booze'}], self.item_class_obj.item_list)
 
 
 if __name__ == '__main__':
