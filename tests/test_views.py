@@ -158,8 +158,13 @@ class TestCaseViews(unittest.TestCase):
 
     def test_shoppingitems_page(self):
         """Test is shoppingitems page is accessible"""
+        # register and login a user
+        self.app.post('/register', data=self.user_reg_details)
+        self.app.post('/login', data=self.user_login_details)
+        # send a GET request
         res = self.app.get('/shoppingitems/Easter')
         self.assertEqual(res.status_code, 200)
+        self.assertIn("You can now add your items", str(res.data))
 
     def test_shoppingitems_creation(self):
         """Test is shoppingitems creation"""
