@@ -96,7 +96,7 @@ def save_edits():
         edit_name = request.form['list_name']
         org_name = request.form['list_name_org']
         msg = shoplist_obj.edit_list(edit_name, org_name, user)
-        shopitems_obj.edited_list_items(edit_name, org_name, user)
+        shopitems_obj.edited_list_items(edit_name, org_name)
         if msg == shoplist_obj.shopping_list:
             response = "Successfully edited list " + org_name
             return render_template('shoppinglist.html', resp=response, shoppinglist=msg)
