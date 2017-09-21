@@ -1,6 +1,7 @@
 """Test routes"""
 import unittest
 from app import app
+from app.shoppinglist import ShoppinglistClass
 
 
 class TestCaseViews(unittest.TestCase):
@@ -20,6 +21,7 @@ class TestCaseViews(unittest.TestCase):
             'email': 'mainachris@gmail.com',
             'password': 'password123'
         }
+        self.shopping_class_obj = ShoppinglistClass()
 
     def tearDown(self):
         self.app = None
@@ -80,19 +82,78 @@ class TestCaseViews(unittest.TestCase):
 
     def test_shoppinglist_page(self):
         """Test is shoppinglist page is accessible"""
-        res = self.app.post('/shoppinglist')
-        self.assertEqual(res.status_code, 200)
         res = self.app.get('/shoppinglist')
         self.assertEqual(res.status_code, 200)
 
     def test_shoppinglist_creation(self):
-        """Test is shoppinglist creation is accessible"""
-        res = self.app.post('/shoppinglist', data={'owner': 'maina@gmail.com', 'name': 'Easter'})
+        """Test is shoppinglist creation"""
+        self.app.post('/register', data=self.user_reg_details)
+        self.app.post('/login', data=self.user_login_details)
+        res = self.app.post(
+            '/shoppinglist', data={'list-name': 'Easter'})
         self.assertEqual(res.status_code, 200)
+        response = self.shopping_class_obj.create_list(
+            'Easter', 'maina@gmail.com')
+        self.assertIsInstance(response, list)
+        self.assertIn("Easter", str(res.data))
+
+
+    def test_shoppinglist_creation_with_error(self):
+        """Test is shoppinglist creation with special characters raises an error"""
+        res = self.app.post(
+            '/shoppinglist', data={'name': 'Easter!'})
+        self.assertEqual(res.status_code, 200)
+        response = self.shopping_class_obj.create_list(
+            'Easter!', 'maina@gmail.com')
+        self.assertIn("No special characters", response)
+
+    def test_shoppinglist_editing(self):
+        """Test is shoppinglist editing"""
+        # register and login a user
+        self.app.post('/register', data=self.user_reg_details)
+        self.app.post('/login', data=self.user_login_details)
+        # make a post request with the edit name and original name
+        res = self.app.post(
+            '/edit-list', data={'list_name_org': 'Easter shopping', 'list_name': 'Easter'})
+        self.assertEqual(res.status_code, 200)
+        response = self.shopping_class_obj.edit_list(
+            'Easter shopping', 'Easter', 'maina@gmail.com')
+        self.assertIsInstance(response, list)
+        # check if edit was successful by looking for the edited name
+        self.assertIn("Easter", str(res.data))
+
+    def test_shoppinglist_editing_with_error(self):
+        """Test is shoppinglist editing with error e.g. special characters in edits"""
+        # create a shopping list
+        self.shopping_class_obj.create_list(
+            'Christmass', 'maina@gmail.com')
+        # send a post request to edit
+        res = self.app.post(
+            '/edit-list', data={'list_name_org': 'Christmass', 'list_name': 'Furniture!'})
+        self.assertEqual(res.status_code, 200)
+        # edit the shopping list
+        response = self.shopping_class_obj.edit_list(
+            'Furniture!', 'Christmass', 'maina@gmail.com')
+        self.assertIn("No special characters", response)
+
+    def test_shoppinglist_deletion(self):
+        """Test is shoppinglist deletion"""
+        # register and login a user
+        self.app.post('/register', data=self.user_reg_details)
+        self.app.post('/login', data=self.user_login_details)
+        # create a shopping list
+        self.shopping_class_obj.create_list(
+            'Christmass', 'maina@gmail.com')
+        # make a post request with the delete name
+        res = self.app.post(
+            '/delete-list', data={'list_name': 'Christmass'})
+        self.assertEqual(res.status_code, 200)
+        self.shopping_class_obj.delete_list(
+            'Christmass', 'maina@gmail.com')
+        # check if delete was successful by looking for the deleted name
+        self.assertIn("Christmass", str(res.data))
 
     def test_shoppingitems_page(self):
         """Test is shoppingitems page is accessible"""
-        res = self.app.post('/shoppingitems/1')
-        self.assertEqual(res.status_code, 200)
-        res = self.app.get('/shoppingitems/1')
+        res = self.app.get('/shoppingitems/Easter')
         self.assertEqual(res.status_code, 200)
