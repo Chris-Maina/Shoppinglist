@@ -91,7 +91,7 @@ class ShoppingItemsClass(object):
         self.item_list[:] = [
             item for item in self.item_list if item.get('list') != list_name]
 
-    def edited_list_items(self, edited_list_name, org_list_name, user):
+    def edited_list_items(self, edited_list_name, org_list_name):
         """Edit list name for the list that was edited
         Args
              shopping list name
