@@ -202,3 +202,44 @@ class TestCaseViews(unittest.TestCase):
         self.assertIn("No special characters", response)
         # check if item was successfully created
         self.assertIn("No special characters", str(res.data))
+
+    def test_shoppingitems_editing(self):
+        """Test is shoppingitems editing"""
+        # register and login a user
+        self.app.post('/register', data=self.user_reg_details)
+        self.app.post('/login', data=self.user_login_details)
+        # create a shopping list
+        self.shopping_class_obj.create_list(
+            'Easter', 'maina@gmail.com')
+        # make a post request with the edit name and original name
+        res = self.app.post(
+            '/edit-item', \
+            data={'item_name_org': 'Bread', 'item_name': 'Juice', 'list_name': 'Easter'})
+        self.assertEqual(res.status_code, 200)
+        response = self.item_class_obj.edit_item(
+            'Juice', 'Bread', 'Easter', 'maina@gmail.com')
+        # test response from shoppingitems class
+        self.assertIsInstance(response, list)
+        # check if edit was successful by looking for the edited name
+        self.assertIn("Juice", str(res.data))
+
+    def test_shoppingitem_deletion(self):
+        """Test is shoppingitem deletion"""
+        # register and login a user
+        self.app.post('/register', data=self.user_reg_details)
+        self.app.post('/login', data=self.user_login_details)
+        # create a shopping list
+        self.shopping_class_obj.create_list(
+            'Christmass', 'maina@gmail.com')
+        # create an item
+        self.item_class_obj.add_item(
+            'Christmass', 'Bread', 'maina@gmail.com')
+        # make a post request with the delete name
+        res = self.app.post(
+            '/delete-item', data={'list_name': 'Christmass', 'item_name': 'Bread'})
+        self.assertEqual(res.status_code, 200)
+        self.item_class_obj.delete_item(
+            'Bread', 'maina@gmail.com', 'Christmass')
+        # check if delete was successful 
+        self.assertIn("Successfuly deleted item ", str(res.data))
+
