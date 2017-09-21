@@ -135,7 +135,7 @@ function-name-hint=(([a-z][a-z0-9_]{2,30})|(_[a-z0-9_]*))$
 function-rgx=(([a-z][a-z0-9_]{2,30})|(_[a-z0-9_]*))$
 
 # Good variable names which should always be accepted, separated by a comma
-good-names=i,j,k,ex,Run,_,app,user_object,shoplist_obj,shopitems_obj,user,f,port
+good-names=i,j,k,ex,Run,_,app,user_object,shoplist_obj,shopitems_obj,user,f,port,test_shoppinglist_creation_with_error,test_shoppinglist_edit_get_request,test_shoppinglist_editing_with_error,test_shoppingitems_creation_with_error,test_editing_invalid_shoppinglist_name
 
 # Include a hint for the correct naming format with invalid-name
 include-naming-hint=no
