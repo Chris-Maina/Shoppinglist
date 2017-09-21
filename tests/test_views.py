@@ -32,21 +32,11 @@ class TestCaseViews(unittest.TestCase):
         self.item_class_obj = None
         self.shopping_class_obj = None
 
-    def test_index_page(self):
-        """Test is root page is accessible"""
-        res = self.app.get('/')
-        self.assertEqual(res.status_code, 200)
-
     def test_registration_page(self):
         """Test is register page is accessible"""
         res = self.app.post('/register')
         self.assertEqual(res.status_code, 400)
         res = self.app.get('/register')
-        self.assertEqual(res.status_code, 200)
-
-    def test_correct_registration(self):
-        """Test correct registration of user"""
-        res = self.app.post('/register', data=self.user_reg_details)
         self.assertEqual(res.status_code, 200)
 
     def test_user_exists_error(self):
