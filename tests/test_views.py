@@ -86,8 +86,14 @@ class TestCaseViews(unittest.TestCase):
 
     def test_shoppinglist_page(self):
         """Test is shoppinglist page is accessible"""
+        # register and login a user
+        self.app.post('/register', data=self.user_reg_details)
+        self.app.post('/login', data=self.user_login_details)
+        # send a GET request
         res = self.app.get('/shoppinglist')
         self.assertEqual(res.status_code, 200)
+        # check if page was loaded by looking for text in the page
+        self.assertIn("Shopping List", str(res.data))
 
     def test_shoppinglist_creation(self):
         """Test is shoppinglist creation"""
@@ -213,7 +219,7 @@ class TestCaseViews(unittest.TestCase):
             'Easter', 'maina@gmail.com')
         # make a post request with the edit name and original name
         res = self.app.post(
-            '/edit-item', \
+            '/edit-item',
             data={'item_name_org': 'Bread', 'item_name': 'Juice', 'list_name': 'Easter'})
         self.assertEqual(res.status_code, 200)
         response = self.item_class_obj.edit_item(
@@ -240,6 +246,11 @@ class TestCaseViews(unittest.TestCase):
         self.assertEqual(res.status_code, 200)
         self.item_class_obj.delete_item(
             'Bread', 'maina@gmail.com', 'Christmass')
-        # check if delete was successful 
+        # check if delete was successful
         self.assertIn("Successfuly deleted item ", str(res.data))
 
+    def test_logout(self):
+        """"Test logging out feature"""
+        res = self.app.get('/logout')
+        self.assertEqual(res.status_code, 200)
+        self.assertIn("Shoppinglist Application", str(res.data))
