@@ -7,7 +7,7 @@ from app.shoppingitems import ShoppingItemsClass
 
 class TestCaseViews(unittest.TestCase):
     """
-    This class tests routes 
+    This class tests routes
     """
 
     def setUp(self):
