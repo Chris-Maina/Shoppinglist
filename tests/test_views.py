@@ -116,6 +116,17 @@ class TestCaseViews(unittest.TestCase):
             'Easter!', 'maina@gmail.com')
         self.assertIn("No special characters", response)
 
+    def test_shoppinglist_edit_get_request(self):
+        """Test edit get request"""
+        # register and login a user
+        self.app.post('/register', data=self.user_reg_details)
+        self.app.post('/login', data=self.user_login_details)
+        # send a GET request
+        res = self.app.get('/edit-list')
+        self.assertEqual(res.status_code, 200)
+        # check if page was loaded by looking for text in the page
+        self.assertIn("Shopping List", str(res.data))
+
     def test_shoppinglist_editing(self):
         """Test is shoppinglist editing"""
         # register and login a user
