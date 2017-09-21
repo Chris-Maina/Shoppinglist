@@ -111,12 +111,14 @@ class TestCasesItems(unittest.TestCase):
         """
         self.list_class_obj.shopping_list = [{'owner': 'maina@gmail.com', 'name': 'Rave'}, {
             'owner': 'maina@gmail.com', 'name': 'Easter'}]
-        self.item_class_obj.add_item("Rave", "Booze", "maina@gmail.com")
+        self.item_class_obj.item_list = [
+            {'owner': 'maina@gmail.com', 'list': 'Rave', 'name': 'Booze'}]
         self.list_class_obj.edit_list(
             'Christmass', 'Rave', "maina@gmail.com")
         self.item_class_obj.edited_list_items(
-            'Christmass', 'Rave', "maina@gmail.com")
-        self.assertEqual([{'owner': 'maina@gmail.com', 'list': 'Christmass', 'name': 'Booze'}], self.item_class_obj.item_list)
+            'Christmass', 'Rave')
+        self.assertEqual([{'owner': 'maina@gmail.com', 'list': 'Christmass', 'name': 'Booze'}],
+                         self.item_class_obj.item_list)
 
 
 if __name__ == '__main__':
