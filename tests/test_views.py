@@ -2,6 +2,7 @@
 import unittest
 from app import app
 from app.shoppinglist import ShoppinglistClass
+from app.shoppingitems import ShoppingItemsClass
 
 
 class TestCaseViews(unittest.TestCase):
@@ -22,11 +23,14 @@ class TestCaseViews(unittest.TestCase):
             'password': 'password123'
         }
         self.shopping_class_obj = ShoppinglistClass()
+        self.item_class_obj = ShoppingItemsClass()
 
     def tearDown(self):
         self.app = None
         self.user_reg_details = None
         self.user_login_details = None
+        self.item_class_obj = None
+        self.shopping_class_obj = None
 
     def test_index_page(self):
         """Test is root page is accessible"""
@@ -97,7 +101,6 @@ class TestCaseViews(unittest.TestCase):
         self.assertIsInstance(response, list)
         self.assertIn("Easter", str(res.data))
 
-
     def test_shoppinglist_creation_with_error(self):
         """Test is shoppinglist creation with special characters raises an error"""
         res = self.app.post(
@@ -157,3 +160,40 @@ class TestCaseViews(unittest.TestCase):
         """Test is shoppingitems page is accessible"""
         res = self.app.get('/shoppingitems/Easter')
         self.assertEqual(res.status_code, 200)
+
+    def test_shoppingitems_creation(self):
+        """Test is shoppingitems creation"""
+        # register and login a user
+        self.app.post('/register', data=self.user_reg_details)
+        self.app.post('/login', data=self.user_login_details)
+        # create a shopping list
+        self.shopping_class_obj.create_list(
+            'Easter', 'maina@gmail.com')
+        # make a post request to add an item
+        res = self.app.post(
+            '/shoppingitems/Easter', data={'item-name': 'Bread'})
+        self.assertEqual(res.status_code, 200)
+        response = self.item_class_obj.add_item(
+            'Easter', 'Bread', 'maina@gmail.com')
+        self.assertIsInstance(response, list)
+        # check if item was successfully created
+        self.assertIn("Bread", str(res.data))
+
+    def test_shoppingitems_creation_with_error(self):
+        """Test is shoppingitems creation with special characters raises an error"""
+        # register and login a user
+        self.app.post('/register', data=self.user_reg_details)
+        self.app.post('/login', data=self.user_login_details)
+        # create a shopping list
+        self.shopping_class_obj.create_list(
+            'Easter', 'maina@gmail.com')
+        # make a post request to add an item
+        res = self.app.post(
+            '/shoppingitems/Easter', data={'item-name': 'Bread-'})
+        self.assertEqual(res.status_code, 200)
+        response = self.item_class_obj.add_item(
+            'Easter', 'Bread-', 'maina@gmail.com')
+        # test response from shoppingitems class
+        self.assertIn("No special characters", response)
+        # check if item was successfully created
+        self.assertIn("No special characters", str(res.data))
