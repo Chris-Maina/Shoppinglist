@@ -34,7 +34,7 @@ developed to use data structures only i.e.
     
 ## Testing the application
 cd into project_folder folder, RUN the following command
-   * $ nosetests --with-coverage --cover-package=tests && coverage report
+   * $ nosetests --with-coverage --cover-package=app && coverage report
 
 ## How to use application
 * Register an account

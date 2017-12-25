@@ -57,7 +57,6 @@ class ShoppingItemsClass(object):
             if item['list'] == list_name:
                 if item['name'] != item_name:
                     if item['name'] == org_item_name:
-                        del item['name']
                         edit_dict = {
                             'name': item_name,
                         }
@@ -91,3 +90,15 @@ class ShoppingItemsClass(object):
         """
         self.item_list[:] = [
             item for item in self.item_list if item.get('list') != list_name]
+
+    def edited_list_items(self, edited_list_name, org_list_name):
+        """Edit list name for the list that was edited
+        Args
+             shopping list name
+        """
+        for shopping_item in self.item_list:
+            if shopping_item['list'] == org_list_name:
+                edit_dict = {
+                    'list': edited_list_name
+                }
+                shopping_item.update(edit_dict)
