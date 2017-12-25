@@ -8,7 +8,8 @@ developed to use data structures only i.e.
   * Dictionaries
 
 Here is a link to the live version:
-  https://chrishoppinglist.herokuapp.com/
+
+     https://chrishoppinglist.herokuapp.com/
   
   ## Installation procedure
  Clone this repository:
