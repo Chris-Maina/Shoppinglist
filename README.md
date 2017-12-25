@@ -6,6 +6,10 @@ developed to use data structures only i.e.
   
   * List
   * Dictionaries
+
+Here is a link to the live version:
+  https://chrishoppinglist.herokuapp.com/
+  
   ## Installation procedure
  Clone this repository:
    * https://github.com/Chris-Maina/Shoppinglist.git
