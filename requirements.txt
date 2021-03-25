@@ -1,7 +1,7 @@
 Flask==0.12.2
 Jinja2==2.9.6
 MarkupSafe==1.0
-PyYAML==3.12
+PyYAML==5.4
 Werkzeug==0.12.2
 astroid==1.5.3
 backports.functools-lru-cache==1.4
